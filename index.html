@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talha Industry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+/* ================= BASE / THEME ================= */
+:root{--bg:#f2f5fc;--text:#0f172a;--muted:#64748b;--line:#e6eaf3;--blue:#3b82f6;--indigo:#6366f1;--green:#10b981;--red:#ef4444;--amber:#f59e0b;--r:20px;--shadow:0 10px 34px rgba(40,56,120,.08)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:var(--text);font-size:14px;line-height:1.45;min-height:100vh;
+ background:radial-gradient(900px 480px at 0 0,#dfe8ff 0,transparent 62%),radial-gradient(800px 460px at 100% 0,#f0e3ff 0,transparent 60%),var(--bg);}
+.hidden{display:none!important}
+button,input,select{font-family:inherit;font-size:14px}
+h1,h2,h3,h4{margin:0}
+.muted,.sub{color:var(--muted)}.sub{font-size:12px}
+.nowrap{white-space:nowrap}
+.mt{margin-top:12px}
+
+/* ================= FORM CONTROLS ================= */
+.in{width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s}
+.in:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(59,130,246,.15)}
+.lbl{display:block;font-size:11px;font-weight:600;color:var(--muted);margin:0 0 5px 3px;letter-spacing:.2px}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;align-items:end}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.rowb{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.btn{border:0;cursor:pointer;font-weight:600;border-radius:12px;padding:11px 18px;color:#fff;background:linear-gradient(135deg,#3b82f6,#6366f1);box-shadow:0 6px 16px rgba(79,102,241,.28);transition:transform .15s,filter .2s,box-shadow .2s}
+.btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.btn:active{transform:scale(.96)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.green{background:linear-gradient(135deg,#34d399,#059669);box-shadow:0 6px 16px rgba(16,185,129,.28)}
+.btn.red{background:linear-gradient(135deg,#f87171,#dc2626);box-shadow:0 6px 16px rgba(239,68,68,.25)}
+.btn.ghost{background:#fff;color:var(--text);border:1.5px solid var(--line);box-shadow:none}
+.btn.sm{padding:6px 12px;font-size:12px;border-radius:10px}
+.btn.block{width:100%}
+.link{background:none;border:0;color:var(--blue);font-weight:600;cursor:pointer}
+.icobtn{position:relative;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.85);backdrop-filter:blur(10px);cursor:pointer;display:grid;place-items:center;font-size:18px;box-shadow:var(--shadow);transition:transform .15s}
+.icobtn:active{transform:scale(.92)}
+#menuBtn{display:none}
+
+/* ================= CARDS / TABLES ================= */
+.card{background:rgba(255,255,255,.82);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.95);border-radius:var(--r);box-shadow:var(--shadow);padding:18px;margin-bottom:16px}
+.card h3{font-size:16px;font-weight:700;margin-bottom:12px}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;color:var(--muted);font-weight:600;text-align:left;padding:10px 8px;text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 8px;border-bottom:1px solid #f1f4f9;font-size:13px;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tbody tr{transition:background .15s}
+tbody tr:hover{background:rgba(99,102,241,.04)}
+tr.clk{cursor:pointer}
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.p-green{background:#dcfce7;color:#15803d}.p-yellow{background:#fef3c7;color:#b45309}.p-red{background:#fee2e2;color:#b91c1c}.p-blue{background:#dbeafe;color:#1d4ed8}.p-gray{background:#f1f5f9;color:#475569}
+.ono{display:inline-block;background:#0f172a;color:#fff;border-radius:8px;padding:3px 9px;font-weight:700;font-size:12px;white-space:nowrap}.ono.rd{background:#16a34a}
+.code{background:#eef2ff;color:#4338ca;padding:2px 8px;border-radius:8px;font-weight:700}
+.empty{text-align:center;color:var(--muted);padding:20px}
+.big{font-size:30px;font-weight:700;letter-spacing:-.6px;margin:2px 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 14px;cursor:pointer;font-weight:600;transition:.2s}
+.chip:hover{background:#eef2ff;border-color:var(--indigo)}
+
+/* ================= LOGIN ================= */
+.login{min-height:100vh;display:grid;place-items:center;padding:20px}
+.lcard{max-width:400px;width:100%;padding:30px 26px;text-align:center;margin:0}
+.lcard h1{font-size:24px;font-weight:800;margin-top:12px}
+.fld{text-align:left;margin-bottom:12px}
+.otp{display:flex;gap:12px;justify-content:center;margin:6px 0 14px}
+.ob{position:relative}
+.ob::after{content:'';position:absolute;bottom:13px;left:50%;width:18px;height:3px;margin-left:-9px;border-radius:3px;background:linear-gradient(90deg,#6366f1,#8b5cf6);opacity:0;transform:scaleX(.3);transition:.25s}
+.ob.filled::after{opacity:1;transform:none}
+.otp-box{width:58px;height:64px;border:2px solid transparent;border-radius:18px;text-align:center;font-size:24px;font-weight:700;color:var(--text);outline:none;transition:transform .25s cubic-bezier(.2,.9,.3,1.4),box-shadow .25s;
+ background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#6366f1,#ec4899) border-box;box-shadow:0 6px 16px rgba(99,102,241,.12);padding:0 0 6px}
+.otp-box:focus{transform:translateY(-7px);box-shadow:0 14px 26px rgba(99,102,241,.28)}
+.otp.bad .otp-box{background:linear-gradient(#fff5f5,#fff5f5) padding-box,linear-gradient(135deg,#ef4444,#f97316) border-box}
+.okk .otp-box{background:linear-gradient(#f0fdf4,#f0fdf4) padding-box,linear-gradient(135deg,#10b981,#34d399) border-box}
+.stp{display:none}
+.stp.on{display:block;animation:slideIn .4s cubic-bezier(.2,.8,.2,1)}
+@keyframes slideIn{from{opacity:0;transform:translateX(26px)}}
+.lockwrap{position:relative;width:78px;height:78px;margin:0 auto 12px}
+.lockic{position:absolute;inset:9px;border-radius:50%;background:linear-gradient(135deg,#eef2ff,#e0e7ff);display:grid;place-items:center;font-size:24px;box-shadow:0 8px 22px rgba(79,102,241,.28)}
+.ring{position:absolute;inset:0;border-radius:50%;border:3px solid transparent;border-top-color:#6366f1;border-left-color:#8b5cf6;animation:spin 1.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spn{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px;margin-right:9px}
+.btn.busy{pointer-events:none}
+.lnk{display:block;margin:12px auto 0}
+.msg{margin-top:12px;font-size:13px;font-weight:600;min-height:18px}.msg.ok{color:#059669}.msg.bad{color:#dc2626}
+.shake{animation:shake .4s}
+@keyframes shake{20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#3b82f6,#6366f1);display:grid;place-items:center;color:#fff;font-weight:800;box-shadow:0 8px 18px rgba(79,102,241,.35);flex:none}
+.logo.big{width:68px;height:68px;border-radius:20px;font-size:24px;margin:0 auto}
+
+/* ================= APP LAYOUT ================= */
+.app{display:grid;grid-template-columns:264px 1fr;min-height:100vh}
+aside{position:sticky;top:0;height:100vh;padding:20px 14px;background:rgba(255,255,255,.66);backdrop-filter:blur(22px);border-right:1px solid rgba(255,255,255,.85);display:flex;flex-direction:column;overflow-y:auto;z-index:200}
+.brand{display:flex;align-items:center;gap:12px;padding:2px 8px 18px}
+.bt{font-weight:800;font-size:16px}
+nav{flex:1}
+nav button{display:flex;align-items:center;gap:12px;width:100%;padding:11px 14px;margin:2px 0;border:0;background:transparent;border-radius:14px;color:#475569;font-weight:500;cursor:pointer;text-align:left;transition:background .2s,transform .15s,box-shadow .2s}
+nav button:hover{background:rgba(99,102,241,.09)}
+nav button:active{transform:scale(.97)}
+nav button.active{background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;box-shadow:0 8px 18px rgba(79,102,241,.3)}
+nav .ic{width:22px;text-align:center;font-size:16px}
+.aside-bottom{padding-top:14px}
+.me{display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.8);border-radius:16px;padding:10px;margin-bottom:10px;border:1px solid var(--line)}
+.mn{font-weight:700}
+.av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#6366f1);color:#fff;display:grid;place-items:center;font-weight:700;overflow:hidden;flex:none}
+.av img{width:100%;height:100%;object-fit:cover}
+main{padding:22px 28px;min-width:0}
+.topbar{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+.gs{position:relative;flex:1;max-width:540px}
+.gs .in{padding-left:42px;border-radius:16px;background:rgba(255,255,255,.9)}
+.gs .gi{position:absolute;left:15px;top:12px;font-size:15px;z-index:1}
+.rel{position:relative}
+.dot{position:absolute;top:-3px;right:-3px;background:#ef4444;color:#fff;font-size:10px;min-width:18px;height:18px;border-radius:20px;display:grid;place-items:center;font-weight:700}
+.dd{position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;border-radius:18px;box-shadow:0 18px 50px rgba(20,30,70,.2);border:1px solid var(--line);z-index:300;max-height:420px;overflow-y:auto;animation:pop .2s}
+.dd.right{left:auto;right:0;width:340px;max-width:88vw}
+.ddh{padding:12px 14px;font-weight:700;border-bottom:1px solid var(--line)}
+.ddi{padding:10px 14px;cursor:pointer;border-bottom:1px solid #f4f6fb}.ddi:hover{background:#f5f7ff}.ddi:last-child{border:0}
+.uchip{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.85);padding:5px 14px 5px 6px;border-radius:30px;box-shadow:var(--shadow);border:1px solid #fff}
+.un{font-weight:600}
+.pagehead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.pagehead h1{font-size:26px;font-weight:800;letter-spacing:-.5px}
+.datechip{background:rgba(255,255,255,.85);border:1px solid #fff;border-radius:14px;padding:8px 14px;font-size:12px;font-weight:600;color:#475569;box-shadow:var(--shadow)}
+.sec{display:none}.sec.active{display:block;animation:fade .35s}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+.scrim{display:none}
+
+/* ================= DASHBOARD ================= */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:16px}
+.stat{border-radius:20px;padding:16px;border:1px solid rgba(255,255,255,.9);transition:transform .2s,box-shadow .2s;box-shadow:var(--shadow)}
+.stat:hover{transform:translateY(-3px)}
+.stat .top{display:flex;align-items:center;gap:10px;font-weight:500;color:#334155;margin-bottom:8px}
+.stat .ico{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:17px}
+.stat .num{font-size:25px;font-weight:700;letter-spacing:-.5px}
+.s1{background:linear-gradient(135deg,#dbeafe,#e0e7ff)}.s1 .ico{background:linear-gradient(135deg,#38bdf8,#3b82f6)}
+.s2{background:linear-gradient(135deg,#ede9fe,#f3e8ff)}.s2 .ico{background:linear-gradient(135deg,#a78bfa,#7c3aed)}
+.s3{background:linear-gradient(135deg,#d1fae5,#ccfbf1)}.s3 .ico{background:linear-gradient(135deg,#34d399,#059669)}
+.s4{background:linear-gradient(135deg,#fce7f3,#fae8ff)}.s4 .ico{background:linear-gradient(135deg,#f472b6,#c026d3)}
+.s5{background:linear-gradient(135deg,#ffedd5,#fef3c7)}.s5 .ico{background:linear-gradient(135deg,#fb923c,#f59e0b)}
+.s6{background:linear-gradient(135deg,#fee2e2,#ffe4e6)}.s6 .ico{background:linear-gradient(135deg,#f87171,#e11d48)}
+.grid2{display:grid;grid-template-columns:1.45fr 1fr;gap:16px}
+.grid2.eq{grid-template-columns:1fr 1fr}
+.act{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #f1f4f9}.act:last-child{border:0}
+.aic{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:17px;flex:none}
+.k-order{background:#dbeafe}.k-ready{background:#dcfce7}.k-invoice{background:#d1fae5}.k-worker{background:#ede9fe}.k-complain{background:#fef3c7}.k-other{background:#f1f5f9}
+.act .t{font-weight:600}.act .m{font-size:12px;color:var(--muted)}.act .ag{margin-left:auto;font-size:11px;color:var(--muted);white-space:nowrap}
+.act.unread{background:linear-gradient(90deg,rgba(99,102,241,.07),transparent);border-radius:12px;padding-left:8px}
+.qa{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px}
+.qa button{border:0;border-radius:18px;padding:16px 8px;cursor:pointer;font-weight:600;color:#334155;display:flex;flex-direction:column;align-items:center;gap:8px;transition:transform .2s,box-shadow .2s}
+.qa button:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.qa button:active{transform:scale(.95)}
+.qa .qi{font-size:22px}
+
+/* ================= WORKER CARD ================= */
+.wcard{margin-top:14px}
+.whead{display:flex;align-items:center;gap:14px}
+.whead .av{width:52px;height:52px;font-size:20px}
+.wname{font-size:18px;font-weight:700}
+.mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:14px 0}
+.tile{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px}
+.tile .tl{font-size:11px;color:var(--muted)}.tile .tv{font-size:18px;font-weight:700;margin-top:2px}
+.tile.red .tv{color:#dc2626}.tile.green .tv{color:#059669}
+.wcard h4{margin:16px 0 8px}
+.formula{background:#f8faff;border:1px dashed #c7d2fe;border-radius:14px;padding:10px 14px;font-weight:600;color:#3730a3}
+
+/* ================= COMPLAIN ================= */
+.cc{background:#fffbeb;border:1.5px solid #fde68a;border-radius:16px;padding:14px;margin-bottom:12px}
+.star{cursor:pointer;font-size:24px;color:#e2e8f0;transition:transform .15s,color .15s}.star:hover{transform:scale(1.2)}.star.active{color:#f59e0b}
+.reply{background:#f0fdf4;border-left:3px solid #22c55e;padding:8px 10px;margin:6px 0;border-radius:10px;font-size:12px}
+
+/* ================= TOAST / MODAL ================= */
+#toastBox{position:fixed;top:18px;right:18px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.toast{pointer-events:auto;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-radius:16px;box-shadow:0 14px 40px rgba(20,30,70,.18);padding:12px 14px;min-width:270px;max-width:340px;display:flex;gap:12px;align-items:center;transform:translateX(120%);opacity:0;transition:transform .45s cubic-bezier(.2,.9,.3,1.2),opacity .3s}
+.toast.show{transform:none;opacity:1}
+.bg{position:fixed;inset:0;background:rgba(15,23,42,.45);backdrop-filter:blur(6px);z-index:1000;display:none;align-items:flex-start;justify-content:center;padding:18px 12px;overflow:auto}
+.bg.on{display:flex}
+.pop{width:100%;max-width:420px;background:#fff;border-radius:22px;overflow:hidden;position:relative;box-shadow:0 30px 70px rgba(0,0,0,.35);animation:pop .3s}
+@keyframes pop{from{transform:scale(.94);opacity:0}}
+
+/* ================= RECEIPT (machine slip) ================= */
+.machine-slot{height:14px;background:linear-gradient(90deg,#111,#333,#111);border-radius:0 0 12px 12px;margin:0 auto;width:80%}
+@keyframes machinePrint{0%{transform:translateY(-120%) scaleY(.1);opacity:0}20%{opacity:1}100%{transform:translateY(0) scaleY(1);opacity:1}}
+.machine-receipt-anim{animation:machinePrint .9s cubic-bezier(.68,-.55,.27,1.55) forwards;transform-origin:top center;border-radius:0!important;border:2px solid #111}
+.machine-receipt{font-family:'Courier Prime',monospace;background:#fff;color:#111}
+.receipt-header{text-align:center;padding:14px;border-bottom:1.5px dashed #111}
+.receipt-body{padding:12px;font-size:11px}
+.receipt-row{display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px dashed #eee}
+.receipt-row.bold{font-weight:700;border-bottom:2px solid #111}
+.thank-you{text-align:center;border:1.5px dashed #111;padding:12px;margin:12px 0;background:#fffff7}
+.thank-you .script{font-family:'Great Vibes',cursive;font-size:22px;color:#a16207}
+.qr-box{display:flex;justify-content:center;gap:12px;align-items:center;border:1px dashed #111;padding:8px;margin:8px 0;background:#f9fafb}
+.ready-badge{background:#16a34a;color:#fff;padding:4px 10px;border-radius:20px;font-size:9px;font-weight:800}
+.lang-btn{position:absolute;top:8px;right:8px;background:#111;color:#FFD86B;border:1px solid #D4AF37;padding:4px 8px;border-radius:20px;font-size:8px;font-weight:800;cursor:pointer;z-index:10}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:900px){
+ .app{grid-template-columns:1fr}
+ aside{position:fixed;left:0;top:0;width:276px;transform:translateX(-105%);transition:transform .3s;background:rgba(255,255,255,.98)}
+ aside.open{transform:none;box-shadow:0 0 60px rgba(0,0,0,.3)}
+ .scrim.on{display:block;position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:150}
+ #menuBtn{display:grid}
+ main{padding:14px}
+ .grid2,.grid2.eq{grid-template-columns:1fr}
+ .qa{grid-template-columns:repeat(2,1fr)}
+ .un{display:none}.uchip{padding:5px}
+ .pagehead h1{font-size:22px}
+}
+
+.updbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9500;display:flex;align-items:center;gap:12px;background:#0f172a;color:#fff;padding:10px 10px 10px 16px;border-radius:18px;box-shadow:0 14px 40px rgba(15,23,42,.35);max-width:94vw;animation:pop .3s}
+.updbar .btn{padding:7px 14px;font-size:13px;white-space:nowrap}
+.updbar .x{background:none;border:0;color:#94a3b8;cursor:pointer;font-size:16px;padding:4px 8px}
+.clog{border-left:3px solid #c7d2fe;padding:2px 0 2px 12px;margin:10px 0}
+.clog b{color:#4338ca}.clog ul{margin:4px 0 0;padding-left:18px;color:#475569}
+/* ================= CAMERAS ================= */
+.camgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.camtile{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
+.camview{height:96px;border-radius:12px;margin-bottom:10px;display:grid;place-items:center;font-size:34px;background:linear-gradient(135deg,#1e1b4b,#4338ca);color:#c7d2fe}
+.camview.live{display:block;height:200px;padding:0;background:#000;overflow:hidden}
+.camview iframe{width:100%;height:100%;border:0;display:block}
+.hikbig{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.hikic{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:26px;background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;box-shadow:0 8px 18px rgba(239,68,68,.25)}
+/* ================= DUSTBIN (notifications saaf) ================= */
+.ddh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.binbtn{display:flex;align-items:center;gap:6px;border:0;background:linear-gradient(135deg,#eef2ff,#f5f3ff);color:#4338ca;font-weight:600;font-size:12px;padding:4px 12px 4px 6px;border-radius:20px;cursor:pointer;transition:transform .15s}
+.binbtn:active{transform:scale(.93)}
+.binstage{position:relative;height:0;overflow:hidden;text-align:center;background:linear-gradient(180deg,#f5f3ff,#fff);transition:height .3s;z-index:2}
+.eating .binstage{height:152px}
+.binstage svg{margin-top:14px;overflow:visible}
+.bin-lid{transform-origin:22px 34px;transition:transform .25s}
+.open .bin-lid{transform:rotate(-34deg) translateY(-4px)}
+.bin-body{transform-origin:70px 144px}
+.eating .bin-body{animation:squash .32s ease-in-out infinite}
+.burp .bin-body{animation:none}
+.mouth{transform-origin:70px 98px;transform-box:view-box}
+.eating .mouth{animation:chomp .32s ease-in-out infinite}
+.burp .mouth{animation:none;transform:scale(1.2,2.4)}
+.burpb{position:absolute;left:calc(50% - 150px);top:34px;background:#fde68a;color:#92400e;font-weight:800;font-size:13px;padding:3px 10px;border-radius:12px;opacity:0;transform:rotate(-12deg) scale(0)}
+.puff{position:absolute;left:calc(50% - 13px);top:78px;width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#d1fae5,#6ee7b7);opacity:0}
+.puff.p2{width:20px;height:20px;left:calc(50% - 10px);top:82px}.puff.p3{width:30px;height:30px;left:calc(50% - 15px);top:76px}
+.puff.p1{--tx:-64px;--ty:-18px}.puff.p2{--tx:-52px;--ty:10px}.puff.p3{--tx:-78px;--ty:-34px}
+.nom{position:absolute;bottom:4px;left:0;right:0;font-size:11px;color:#7c3aed;opacity:0;transition:opacity .2s}
+.eating .nom{opacity:1}.burp .nom{opacity:0}
+.burp .burpb{animation:popb .9s ease-out forwards}
+.burp .puff{animation:puff .95s ease-out forwards}
+.burp .p2{animation-delay:.1s}.burp .p3{animation-delay:.2s}
+@keyframes popb{0%{transform:rotate(-12deg) scale(0);opacity:0}25%{transform:rotate(-12deg) scale(1.15);opacity:1}80%{transform:rotate(-12deg) scale(1);opacity:1}100%{transform:rotate(-12deg) translateY(-6px) scale(.9);opacity:0}}
+@keyframes puff{0%{transform:translate(0,0) scale(.3);opacity:.95}100%{transform:translate(var(--tx),var(--ty)) scale(1.8);opacity:0}}
+@keyframes squash{50%{transform:scale(1.05,.93)}}
+@keyframes chomp{50%{transform:scaleY(2.4)}}
+@keyframes flyUp{60%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(.12);opacity:0}}
+.act{position:relative}
+.act.fly{z-index:3;animation:flyUp .6s cubic-bezier(.45,0,.85,.45) forwards;animation-delay:calc(var(--i)*.12s)}
+.arm{transform-box:view-box}
+.arm-l{transform-origin:32px 74px;transform:rotate(14deg)}
+.arm-r{transform-origin:108px 74px;transform:rotate(-14deg)}
+.eating .arm-l{animation:grabL .6s ease-in-out infinite}
+.eating .arm-r{animation:grabR .6s ease-in-out .3s infinite}
+.burp .arm-l,.burp .arm-r{animation:none}
+.burp .arm-l{transform:rotate(30deg)}.burp .arm-r{transform:rotate(-30deg)}
+@keyframes grabL{0%,100%{transform:rotate(42deg)}50%{transform:rotate(-50deg)}}
+@keyframes grabR{0%,100%{transform:rotate(-42deg)}50%{transform:rotate(50deg)}}
+/* ================= MOBILE SPEED ================= */
+@media(max-width:900px){
+ *,*::before,*::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+ .card{background:#fff}.icobtn,.uchip,.datechip{background:#fff}
+ aside{background:#fff}.toast{background:#fff}
+ .stat:hover,.btn:hover,.qa button:hover{transform:none}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ================= PRINT ================= */
+@media print{
+ body{background:#fff}
+ aside,.topbar,.noprint,#toastBox,.scrim{display:none!important}
+ .app{display:block}main{padding:0}
+ .card{box-shadow:none;border:1px solid #ddd;background:#fff}
+ body.pr .app,body.pr .login{display:none!important}
+ body.pr #receiptPopup{position:static;background:none;backdrop-filter:none;display:block;padding:0}
+ body.pr .pop{box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<div id="updBar" class="updbar hidden"><span id="updTxt">🆕 Naya update tayyar hai</span><button class="btn" onclick="applyUpdate()">Update Karo</button><button class="x" onclick="$('updBar').classList.add('hidden')" aria-label="Band">✕</button></div>
+
+<!-- ============================ LOGIN ============================ -->
+<div id="loginPage" class="login">
+ <div class="card lcard">
+  <form id="loginForm" autocomplete="off" novalidate>
+   <!-- STEP 1: NAAM -->
+   <div class="stp on" id="step1">
+    <div class="logo big">TI</div>
+    <h1>Talha Industry</h1>
+    <p class="muted" style="margin:2px 0 20px">Factory Management System</p>
+    <div class="fld"><label class="lbl">AAPKA NAAM</label><input class="in" id="userName" placeholder="Naam likho" maxlength="40" autocomplete="off"></div>
+    <button class="btn block" id="nextBtn" type="button">Aage Barho →</button>
+    <div id="nameMsg" class="msg"></div>
+    <div class="sub" id="verTag" style="margin-top:6px"></div>
+   </div>
+   <!-- STEP 2: CODE -->
+   <div class="stp" id="step2">
+    <div class="lockwrap"><span class="ring"></span><div class="lockic">🔒</div></div>
+    <h1 style="font-size:23px">Verify it's you</h1>
+    <p class="muted" style="margin:4px 0 20px">Salaam <b id="hiName" style="color:var(--text)"></b>, apna code likho</p>
+    <div class="otp" id="otpRow">
+     <div class="ob"><input class="otp-box" maxlength="1" inputmode="numeric" id="c1" aria-label="Code 1"></div>
+     <div class="ob"><input class="otp-box" maxlength="1" inputmode="numeric" id="c2" aria-label="Code 2"></div>
+     <div class="ob"><input class="otp-box" maxlength="1" inputmode="numeric" id="c3" aria-label="Code 3"></div>
+     <div class="ob"><input class="otp-box" maxlength="1" inputmode="numeric" id="c4" aria-label="Code 4"></div>
+    </div>
+    <div id="pwWrap" class="fld hidden"><label class="lbl">PERSONAL / LAMBA CODE</label><input class="in" id="easyCode" placeholder="Code likho" autocomplete="off"></div>
+    <button class="btn block" id="loginBtn" type="submit">Verify</button>
+    <div id="loginMsg" class="msg"></div>
+    <button class="link lnk" id="toggleCode" type="button">Worker ya lamba code? Seedha likho</button>
+    <button class="link lnk" id="backBtn" type="button" style="color:var(--muted)">← Naam badlo</button>
+   </div>
+  </form>
+ </div>
+</div>
+
+<!-- ============================ MAIN APP ============================ -->
+<div id="mainPage" class="app hidden">
+ <div class="scrim" id="scrim" onclick="closeSide()"></div>
+
+ <aside id="side">
+  <div class="brand"><div class="logo">TI</div><div><div class="bt">Talha Industry</div><div class="sub">Factory Management System</div></div></div>
+  <nav id="navBox"></nav>
+  <div class="aside-bottom">
+   <div class="me"><div class="av" id="meAv"></div><div><div class="mn" id="meName">-</div><div class="sub" id="meRole">-</div></div></div>
+   <button class="btn ghost block" id="logout">⎋ Logout</button>
+  </div>
+ </aside>
+
+ <main>
+  <div class="topbar">
+   <button class="icobtn" id="menuBtn" onclick="openSide()">☰</button>
+   <div class="gs"><span class="gi">🔍</span><input id="gsQ" class="in" placeholder="Search anything..." oninput="gsearch(this.value)" autocomplete="off"><div id="gsOut" class="dd hidden"></div></div>
+   <div class="rel">
+    <button class="icobtn" id="bell" onclick="event.stopPropagation();toggleNotif()">🔔<span id="notifDot" class="dot hidden">0</span></button>
+    <div id="notifDD" class="dd right hidden" onclick="event.stopPropagation()">
+     <div class="ddh"><span>🔔 Notifications</span>
+      <button class="binbtn" onclick="clearNotifs()" title="Sab saaf karo"><svg width="22" height="24" viewBox="0 0 140 150" aria-hidden="true"><defs><linearGradient id="binGs" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs><rect x="22" y="20" width="96" height="14" rx="7" fill="#a5b4fc"/><rect x="58" y="8" width="24" height="14" rx="7" fill="#c7d2fe"/><path d="M30 42H110L103 136Q102 144 94 144H46Q38 144 37 136Z" fill="url(#binGs)"/></svg>Clear</button></div>
+     <div class="binstage" aria-hidden="true">
+      <svg viewBox="0 0 140 150" width="110" height="118"><defs><linearGradient id="binG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#7c3aed"/></linearGradient><linearGradient id="binL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a5b4fc"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+       <g class="bin-lid"><rect x="22" y="20" width="96" height="14" rx="7" fill="url(#binL)"/><rect x="58" y="8" width="24" height="14" rx="7" fill="#c7d2fe"/></g>
+       <g class="bin-body"><path d="M30 42H110L103 136Q102 144 94 144H46Q38 144 37 136Z" fill="url(#binG)"/><path d="M45 54V126" stroke="#fff" stroke-opacity=".2" stroke-width="6" stroke-linecap="round"/>
+        <path d="M52 80q7-9 14 0" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M74 80q7-9 14 0" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <circle cx="49" cy="93" r="6" fill="#f9a8d4" opacity=".65"/><circle cx="91" cy="93" r="6" fill="#f9a8d4" opacity=".65"/>
+        <ellipse class="mouth" cx="70" cy="98" rx="10" ry="4" fill="#4c1d95"/>
+        <g class="arm arm-l"><line x1="32" y1="74" x2="32" y2="109" stroke="#7c3aed" stroke-width="7" stroke-linecap="round"/><circle cx="32" cy="114" r="8.5" fill="#fff" stroke="#e0e7ff" stroke-width="1.5"/><circle cx="25.5" cy="110" r="3.6" fill="#fff" stroke="#e0e7ff" stroke-width="1.2"/></g>
+        <g class="arm arm-r"><line x1="108" y1="74" x2="108" y2="109" stroke="#7c3aed" stroke-width="7" stroke-linecap="round"/><circle cx="108" cy="114" r="8.5" fill="#fff" stroke="#e0e7ff" stroke-width="1.5"/><circle cx="114.5" cy="110" r="3.6" fill="#fff" stroke="#e0e7ff" stroke-width="1.2"/></g></g></svg>
+      <div class="puff p1"></div><div class="puff p2"></div><div class="puff p3"></div><div class="burpb">BURP!</div><div class="nom">nom nom…</div>
+     </div>
+     <div id="notifBody" style="padding:4px 12px"></div></div>
+   </div>
+   <div class="uchip"><div class="av" id="uAv"></div><div class="un" id="uName">-</div></div>
+  </div>
+
+  <div class="pagehead"><div><h1 id="pgTitle">Dashboard</h1><div class="muted" id="pgSub"></div></div><div class="datechip" id="pgDate"></div></div>
+
+  <!-- ===== SENIOR: DASHBOARD ===== -->
+  <section id="dash" class="sec">
+   <div class="stats" id="dashStats"></div>
+   <div class="grid2">
+    <div class="card"><div class="rowb"><div><h3 style="margin:0">Revenue Overview</h3><div class="sub">Last 7 days earnings (paid invoices)</div></div><span class="pill p-blue">7 Days</span></div>
+     <div class="big" id="rev7">Rs 0</div><canvas id="revChart" height="150"></canvas></div>
+    <div class="card"><div class="rowb"><h3 style="margin:0">Recent Activity</h3><button class="link" onclick="toggleNotif(true)">View All</button></div><div id="actList"></div></div>
+   </div>
+   <div class="grid2">
+    <div class="card"><h3>Quick Actions</h3>
+     <div class="qa">
+      <button style="background:linear-gradient(135deg,#dbeafe,#e0e7ff)" onclick="go('partyNew')"><span class="qi">📦</span>Create Order</button>
+      <button style="background:linear-gradient(135deg,#ede9fe,#f3e8ff)" onclick="go('invoices')"><span class="qi">🧾</span>Generate Invoice</button>
+      <button style="background:linear-gradient(135deg,#d1fae5,#ccfbf1)" onclick="go('workers')"><span class="qi">👷</span>Manage Workers</button>
+      <button style="background:linear-gradient(135deg,#fce7f3,#fae8ff)" onclick="go('reports')"><span class="qi">📊</span>View Reports</button>
+      <button style="background:linear-gradient(135deg,#ffedd5,#fee2e2)" onclick="go('cameras')"><span class="qi">📹</span>Cameras</button>
+     </div></div>
+    <div class="card"><div class="rowb"><h3 style="margin:0">Recent Invoices</h3><button class="link" onclick="go('invoices')">View All</button></div>
+     <div class="tw"><table><thead><tr><th>#</th><th>Client</th><th>Amount</th><th>Status</th></tr></thead><tbody id="invMini"></tbody></table></div></div>
+   </div>
+   <div class="card"><h3>📊 Kitna Mal Kab Kis Din (Last 7 Days Orders)</h3><canvas id="mainChart" height="90"></canvas></div>
+  </section>
+
+  <!-- ===== SENIOR: ORDERS ===== -->
+  <section id="orders" class="sec">
+   <div class="card"><div class="rowb"><input class="in" id="oq" style="max-width:360px" placeholder="🔍 Order search (party, kis ko, type, TI-001)" oninput="renderOrders()"><button class="btn" onclick="go('partyNew')">➕ Naya Order</button></div>
+    <div class="tw"><table><thead><tr><th>No</th><th>Party</th><th>Kis Ko</th><th>Order</th><th>Status</th><th>Date</th><th>Receipt</th><th>Action</th></tr></thead><tbody id="orderTable"></tbody></table></div></div>
+  </section>
+
+  <section id="readyOrders" class="sec">
+   <div class="card"><div class="tw"><table><thead><tr><th>No</th><th>Party</th><th>Kis Ko</th><th>Order</th><th>Ready Time</th><th>Worker</th><th>Receipt</th></tr></thead><tbody id="readyTable"></tbody></table></div></div>
+  </section>
+
+  <!-- ===== SENIOR: INVOICES ===== -->
+  <section id="invoices" class="sec">
+   <div class="card"><h3>🧾 Naya Invoice</h3>
+    <form id="invForm"><div class="fg">
+     <div><label class="lbl">CLIENT / PARTY</label><input class="in" id="inClient" list="clientList" required placeholder="Party ka naam"><datalist id="clientList"></datalist></div>
+     <div><label class="lbl">PHONE (OPTIONAL)</label><input class="in" id="inPhone" type="tel" inputmode="tel" placeholder="03xx xxxxxxx"></div>
+     <div><label class="lbl">ORDER (OPTIONAL)</label><select class="in" id="inOrder"></select></div>
+     <div><label class="lbl">AMOUNT (Rs)</label><input class="in" id="inAmount" type="number" min="1" step="any" required placeholder="25000"></div>
+     <div><label class="lbl">DATE</label><input class="in" id="inDate" type="date" required></div>
+     <div><label class="lbl">STATUS</label><select class="in" id="inStatus"><option>Pending</option><option>Paid</option></select></div>
+     <div><button class="btn block" type="submit">Invoice Banao</button></div>
+    </div></form></div>
+   <div class="card"><div class="tw"><table><thead><tr><th>Invoice</th><th>Client</th><th>Order</th><th>Amount</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="invTable"></tbody></table></div></div>
+  </section>
+
+  <!-- ===== SENIOR: WORKERS ===== -->
+  <section id="workers" class="sec">
+   <div class="card"><h3>🔎 Worker Search</h3>
+    <div class="row"><input class="in" id="wsQ" style="flex:1;min-width:200px" placeholder="Naam ya sirf code likho (jaise Rizwan ya admin122)" oninput="wSearch()"><input class="in" id="wMonth" type="month" style="max-width:190px" onchange="render()"></div>
+    <div id="wsOut"></div></div>
+   <div class="card"><h3 id="wFormTitle">➕ Naya Worker Register</h3>
+    <form id="wForm"><div class="fg">
+     <div><label class="lbl">NAAM</label><input class="in" id="wName" required placeholder="Operator Rizwan"></div>
+     <div><label class="lbl">CODE (AAP KHUD BANAO)</label><input class="in" id="wCode" required placeholder="admin122"></div>
+     <div><label class="lbl">MAHANA TANKHWAH (Rs)</label><input class="in" id="wSalary" type="number" min="0" step="any" required placeholder="35000"></div>
+     <div class="row"><button class="btn" id="wSubmit" type="submit">Register Karo</button><button class="btn ghost hidden" id="wCancel" type="button" onclick="resetWForm()">Cancel</button></div>
+    </div></form>
+    <div class="sub mt" id="wRuleNote"></div></div>
+   <div class="card"><h3>👷 Sab Workers</h3><div class="tw"><table><thead><tr><th>Naam</th><th>Code</th><th>Salary</th><th>Is Mahine (P / A / H)</th><th>Kaatouti</th><th>Net</th><th>Action</th></tr></thead><tbody id="wTable"></tbody></table></div></div>
+  </section>
+
+  <!-- ===== SENIOR: ATTENDANCE ===== -->
+  <section id="attendance" class="sec">
+   <div class="card"><h3>🕒 Attendance Lagao</h3>
+    <form id="attForm"><div class="fg">
+     <div><label class="lbl">WORKER</label><select class="in" id="atW"></select></div>
+     <div><label class="lbl">DATE</label><input class="in" id="atDate" type="date" required></div>
+     <div><label class="lbl">STATUS</label><select class="in" id="atStatus"><option>Present</option><option>Absent</option><option>Half Day</option></select></div>
+     <div><label class="lbl">AANE KA WAQT</label><input class="in" id="atTime" type="time"></div>
+     <div><button class="btn block" type="submit">Save</button></div>
+    </div></form>
+    <div class="sub mt" id="atNote"></div></div>
+   <div class="card"><div class="tw"><table><thead><tr><th>Date</th><th>Worker</th><th>Status</th><th>Check-In</th><th>Late</th><th>Kaatouti</th><th>Del</th></tr></thead><tbody id="attTable"></tbody></table></div></div>
+  </section>
+
+  <!-- ===== SENIOR: CLIENTS ===== -->
+  <section id="clients" class="sec">
+   <div class="card"><h3>🤝 Naya Client</h3>
+    <form id="clientForm"><div class="fg">
+     <div><label class="lbl">NAAM</label><input class="in" id="clName" required></div>
+     <div><label class="lbl">PHONE</label><input class="in" id="clPhone"></div>
+     <div><label class="lbl">SHEHR / ADDRESS</label><input class="in" id="clCity"></div>
+     <div><button class="btn block" type="submit">Add Client</button></div>
+    </div></form></div>
+   <div class="card"><div class="tw"><table><thead><tr><th>Client</th><th>Phone</th><th>Address</th><th>Orders</th><th>Billed</th><th>Baqi</th><th></th></tr></thead><tbody id="clientTable"></tbody></table></div></div>
+  </section>
+
+  <!-- ===== SENIOR: PRODUCTS ===== -->
+  <section id="products" class="sec">
+   <div class="card"><h3>🏷️ Naya Product</h3>
+    <form id="prodForm"><div class="fg">
+     <div><label class="lbl">PRODUCT</label><input class="in" id="pName" required placeholder="LD Yellow Roll"></div>
+     <div><label class="lbl">RATE PER KG (Rs)</label><input class="in" id="pRate" type="number" min="0" step="any" required></div>
+     <div><label class="lbl">STOCK (KG)</label><input class="in" id="pStock" type="number" min="0" step="any" required></div>
+     <div><button class="btn block" type="submit">Add Product</button></div>
+    </div></form></div>
+   <div class="card"><div class="tw"><table><thead><tr><th>Product</th><th>Rate / kg</th><th>Stock (kg)</th><th>Stock Value</th><th></th></tr></thead><tbody id="prodTable"></tbody></table></div></div>
+  </section>
+
+  <!-- ===== SENIOR: CAMERAS ===== -->
+  <section id="cameras" class="sec">
+   <div class="card"><div class="hikbig"><div class="hikic">📹</div><div style="flex:1;min-width:200px"><h3 style="margin:0 0 2px">Hik-Connect</h3><div class="sub">Live video aur recording Hik-Connect mein dikhti hai. Neeche button se seedha kholo.</div></div><button class="btn" onclick="openHik()">📹 Hik-Connect Kholo</button></div>
+    <div class="sub mt" id="hikNote"></div></div>
+   <div class="card"><h3>➕ Camera Add Karo</h3>
+    <form id="camForm"><div class="fg">
+     <div><label class="lbl">CAMERA KA NAAM</label><input class="in" id="camName" required placeholder="Gate"></div>
+     <div><label class="lbl">JAGAH / NVR CHANNEL (OPTIONAL)</label><input class="in" id="camWhere" placeholder="Channel 1 - Mukhya darwaza"></div>
+     <div><label class="lbl">STREAM NAAM (LIVE KE LIYE, OPTIONAL)</label><input class="in" id="camSrc" placeholder="gate"></div>
+     <div><button class="btn block" type="submit">Add Camera</button></div>
+    </div></form>
+    <div class="chips"><span class="sub" style="align-self:center">Jaldi add:</span><button class="chip" type="button" onclick="quickCam('Gate')">Gate</button><button class="chip" type="button" onclick="quickCam('Machine Hall')">Machine Hall</button><button class="chip" type="button" onclick="quickCam('Godown')">Godown</button><button class="chip" type="button" onclick="quickCam('Office')">Office</button></div></div>
+   <div class="camgrid" id="camGrid"></div>
+  </section>
+
+  <!-- ===== SENIOR: MALL STOCK ===== -->
+  <section id="mall" class="sec">
+   <div class="card">
+    <input id="mallSearch" class="in" placeholder="🔍 Search - LD Yellow, Shahzad, 18x011 likho" oninput="renderMall()" style="margin-bottom:12px">
+    <form id="mallForm"><div class="fg">
+     <div><label class="lbl">COLOUR</label><select class="in" id="mallColour"><option>LD Yellow</option><option>LD White</option><option>PP Natural</option><option>PP</option></select></div>
+     <div><label class="lbl">SIZE</label><input class="in" id="mallSize" required placeholder="18x011"></div>
+     <div><label class="lbl">WEIGHT</label><input class="in" id="mallWeight" required placeholder="150kg"></div>
+     <div><label class="lbl">DATE</label><input class="in" id="mallDate" type="date" required></div>
+     <div><label class="lbl">PARTY / NOTE</label><input class="in" id="mallNote" required placeholder="Party Name"></div>
+     <div><button class="btn block" type="submit">Add Mall</button></div>
+    </div></form></div>
+   <div class="card"><div class="tw"><table><thead><tr><th>Colour / Party</th><th>Size</th><th>Weight</th><th>Date</th><th>Graph</th><th>Del</th></tr></thead><tbody id="mallTable"></tbody></table></div></div>
+   <div id="mallGraphDetail" class="card hidden">
+    <div class="rowb"><h3 style="margin:0">📊 <span id="selectedMallName">-</span> ka Graph</h3><button class="btn ghost sm" onclick="$('mallGraphDetail').classList.add('hidden')">Close</button></div>
+    <canvas id="mallDetailChart" height="100"></canvas><div class="mini" id="mallDetailStats"></div></div>
+  </section>
+
+  <!-- ===== SENIOR: REPORTS ===== -->
+  <section id="reports" class="sec">
+   <div class="card"><div class="rowb"><div class="row"><label class="lbl" style="margin:0">MAHINA</label><input class="in" id="rMonth" type="month" style="max-width:190px" onchange="renderReports()"></div>
+    <div class="row noprint"><button class="btn ghost" onclick="window.print()">🖨️ Print</button><button class="btn green" onclick="payrollCSV()">⬇️ Payroll CSV</button></div></div>
+    <div class="stats" id="rStats" style="margin-bottom:0"></div></div>
+   <div class="card"><h3>📊 Orders Per Day</h3><canvas id="rChart" height="90"></canvas></div>
+   <div class="card"><h3>👷 Worker Payroll Report</h3><div class="tw"><table><thead><tr><th>Worker</th><th>Salary</th><th>P</th><th>A</th><th>H</th><th>Late</th><th>Late Kaatouti</th><th>Absent Kaatouti</th><th>Net</th></tr></thead><tbody id="rTable"></tbody></table></div></div>
+  </section>
+
+  <!-- ===== SENIOR: SETTINGS ===== -->
+  <section id="settings" class="sec">
+   <div class="card"><h3>⚙️ Settings</h3>
+    <form id="seForm">
+     <div class="fg">
+      <div><label class="lbl">LATE HAR KITNE GHANTAY PAR</label><input class="in" id="seLateH" type="number" min="0.25" step="any" required></div>
+      <div><label class="lbl">KAATOUTI (Rs)</label><input class="in" id="seLateA" type="number" min="0" step="any" required></div>
+      <div><label class="lbl">DUTY SHURU HONE KA WAQT</label><input class="in" id="seShift" type="time" required></div>
+      <div><label class="lbl">MAHINE KE DIN (SALARY ÷)</label><input class="in" id="seDays" type="number" min="1" required></div>
+      <div><label class="lbl">HIK-CONNECT LINK (OPTIONAL)</label><input class="in" id="seHik" placeholder="https://www.hik-connect.com"></div>
+      <div><label class="lbl">LIVE VIDEO SERVER (go2rtc)</label><input class="in" id="seGo" placeholder="http://192.168.1.10:1984"></div>
+     </div>
+     <label class="row mt" style="gap:8px"><input type="checkbox" id="seAbsent"> Absent par kaatouti (Absent = salary ÷ din, Half Day = aadha)</label>
+     <h4 style="margin:18px 0 8px">🔐 Portal Codes</h4>
+     <div class="fg">
+      <div><label class="lbl">SENIOR CODE</label><input class="in" id="seCS" required></div>
+      <div><label class="lbl">PARTY CODE</label><input class="in" id="seCP" required></div>
+      <div><label class="lbl">WORKER (COMMON) CODE</label><input class="in" id="seCW" required></div>
+     </div>
+     <button class="btn mt" type="submit">Settings Save Karo</button>
+    </form></div>
+   <div class="card"><h3>💾 Backup</h3><p class="muted" style="margin-top:0">Data sirf is browser mein save hota hai. Time time par backup download kar lo, aur dusre computer par restore kar sakte ho.</p>
+    <div class="row"><button class="btn green" onclick="backup()">⬇️ Backup Download</button><button class="btn ghost" onclick="$('restoreFile').click()">⬆️ Restore</button><input type="file" id="restoreFile" accept=".json" class="hidden" onchange="restore(this.files[0])"></div></div>
+   <div class="card"><h3>🆕 Version aur Update</h3><div id="verBox"></div></div>
+   <div class="card"><h3>ℹ️ Account</h3><div id="portalInfoDetailS"></div></div>
+  </section>
+
+  <!-- ===== COMPLAIN (sab roles) ===== -->
+  <section id="complain" class="sec">
+   <div class="card" id="complainFormPanel"><h3>📢 Complain / Review</h3>
+    <form id="complainForm"><input class="in" id="complainText" required placeholder="Shikayat likho..." style="margin-bottom:10px">
+     <div class="row" style="margin-bottom:12px"><span class="muted">Review:</span><span class="star" data-star="1">★</span><span class="star" data-star="2">★</span><span class="star" data-star="3">★</span><span class="star" data-star="4">★</span><span class="star" data-star="5">★</span><input type="hidden" id="complainRating" value="0"></div>
+     <button class="btn" type="submit">📢 Complain Bhejo</button></form></div>
+   <div id="complainList"></div>
+  </section>
+
+  <!-- ===== PARTY ===== -->
+  <section id="partyOrders" class="sec">
+   <div class="card"><div class="tw"><table><thead><tr><th>No</th><th>Kis Ko</th><th>Order</th><th>Status</th><th>Date</th><th>Receipt</th></tr></thead><tbody id="partyOrderTable"></tbody></table></div></div>
+  </section>
+
+  <section id="partyInvoices" class="sec">
+   <div class="stats" id="partyInvStats"></div>
+   <div class="card"><div class="tw"><table><thead><tr><th>Invoice</th><th>Order</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead><tbody id="partyInvTable"></tbody></table></div></div>
+  </section>
+
+  <section id="partyNew" class="sec">
+   <div class="card"><h3>➕ New Order</h3>
+    <form id="partyOrderForm"><div class="fg">
+     <div id="poPartyWrap" class="hidden"><label class="lbl">PARTY KA NAAM *</label><input class="in" id="poParty" placeholder="Party name"></div>
+     <div><label class="lbl">KIS KO *</label><input class="in" id="poTo" required></div>
+     <div><label class="lbl">TYPE</label><select class="in" id="poType"><option>LD Yellow</option><option>PP</option><option>LLD</option><option>ABA</option></select></div>
+     <div><label class="lbl">SIZE *</label><input class="in" id="poSize" required></div>
+     <div><label class="lbl">WEIGHT *</label><input class="in" id="poQty" required></div>
+     <div><label class="lbl">SIMPLE *</label><input class="in" id="poColour" required></div>
+     <div><label class="lbl">DATE</label><input class="in" id="poDate" type="date" required></div>
+     <div><label class="lbl">NOTE / ADDRESS</label><input class="in" id="poNote"></div>
+    </div><button class="btn green block mt" type="submit">🎉 ORDER CONFIRM</button></form></div>
+  </section>
+
+  <!-- ===== WORKER ===== -->
+  <section id="wDash" class="sec">
+   <div class="stats" id="wStats"></div>
+   <div class="card"><h3>👤 Apna Data Dekho</h3><p class="muted" style="margin-top:0">Apni attendance, kaatouti aur salary dekhne ke liye "Mera Data" mein apna code likho.</p><button class="btn" onclick="go('myData')">Mera Data Kholo →</button></div>
+  </section>
+
+  <section id="ordersWork" class="sec">
+   <div class="card"><div class="tw"><table><thead><tr><th>No</th><th>Party</th><th>Kis Ko</th><th>Order</th><th>Status</th><th>Action</th></tr></thead><tbody id="ordersWorkTable"></tbody></table></div></div>
+  </section>
+
+  <section id="doneWork" class="sec">
+   <div class="card"><div class="tw"><table><thead><tr><th>No</th><th>Kis Ko</th><th>Order</th><th>Ready Time</th><th>Receipt</th></tr></thead><tbody id="doneWorkTable"></tbody></table></div></div>
+  </section>
+
+  <section id="myData" class="sec">
+   <div class="card"><h3>🔑 Apna Code Likho</h3>
+    <div class="row"><input class="in" id="mdCode" style="flex:1;min-width:200px" placeholder="Apna personal code" onkeydown="if(event.key==='Enter')mdShow()"><input class="in" id="mdMonth" type="month" style="max-width:190px" onchange="renderMyData()"><button class="btn" onclick="mdShow()">Data Dikhao</button></div></div>
+   <div id="mdOut"></div>
+  </section>
+
+  <section id="account" class="sec">
+   <div class="card"><h3>⚙️ Account</h3><div id="portalInfoDetail"></div></div>
+  </section>
+ </main>
+</div>
+
+<!-- ============================ RECEIPT POPUP ============================ -->
+<div id="receiptPopup" class="bg" onclick="this.classList.remove('on')">
+ <div style="width:100%;max-width:420px"><div class="machine-slot"></div>
+  <div class="pop machine-receipt-anim" onclick="event.stopPropagation()">
+   <button class="lang-btn noprint" id="langBtn" onclick="toggleLang()">🌐 ENGLISH ↔ ROMAN URDU</button>
+   <div class="machine-receipt">
+    <div class="receipt-header"><h2 style="margin:0;font-size:18px;letter-spacing:2px">🏭 TALHA INDUSTRY</h2><p style="font-size:8px;letter-spacing:1px;margin:2px 0" data-key="ceoTitle">CHIEF EXECUTIVE OFFICER</p><p style="font-size:12px;font-weight:700;margin:0">RANA MUHAMMAD SHAKEEL</p><div style="margin-top:8px;background:#111;color:#fff;display:inline-block;padding:4px 12px;font-size:9px;font-weight:700" data-key="machineReceipt">MACHINE RECEIPT</div></div>
+    <div class="receipt-body">
+     <div style="background:#111;color:#fff;text-align:center;padding:10px;margin-bottom:10px">
+      <div style="font-size:7px;letter-spacing:2px" data-key="orderNoLabel">ORDER NUMBER - WHITE MALL RECEIPT</div>
+      <div id="rcOrderNo" style="font-size:22px;font-weight:800;letter-spacing:2px">#TI-001</div>
+      <div style="font-size:7px">Receipt: <span id="rcNo">#</span> • <span id="rcDate">-</span></div>
+      <div id="rcReadyBadge" style="margin-top:6px;display:none"><span class="ready-badge" data-key="readyGreen">✅ READY - GREEN - MALL READY HAI</span></div>
+     </div>
+     <div class="receipt-row"><span data-key="party">Party (Private):</span><span id="rcUser" style="font-weight:700">-</span></div>
+     <div class="receipt-row"><span data-key="kisKoReceipt">KIS KO DENA HAI:</span><span id="rcTo" style="font-weight:700">-</span></div>
+     <div class="receipt-row"><span data-key="type">TYPE:</span><span id="rcType">-</span></div>
+     <div class="receipt-row"><span data-key="size">SIZE:</span><span id="rcSize">-</span></div>
+     <div class="receipt-row"><span data-key="weight">WEIGHT:</span><span id="rcQty">-</span></div>
+     <div class="receipt-row"><span data-key="simple">SIMPLE:</span><span id="rcColour">-</span></div>
+     <div class="receipt-row"><span data-key="address">ADDRESS:</span><span id="rcAddress">-</span></div>
+     <div class="receipt-row bold"><span data-key="status">STATUS:</span><span id="rcStatus" style="color:#16a34a">ORDER DONE</span></div>
+     <div class="qr-box"><div id="qrcode"></div><div style="text-align:left;font-size:7px;line-height:1.4"><b data-key="qrTitle">QR CODE - Scan Karo</b><br><span data-key="qrDesc">Scan karke order dekho</span><br><span style="font-size:6px;color:#6b7280" id="qrDataText">TI-001</span></div></div>
+     <div class="thank-you"><div class="script" data-key="thankCursive">Thank you for Choosing</div><div style="font-size:16px;font-weight:800" data-key="thankTitle">TALHA INDUSTRY</div><div style="font-size:7px;font-weight:700" data-key="ceoSmall">CEO Rana Muhammad Shakeel</div><div style="font-size:9px;margin-top:4px;font-weight:700" data-key="thankMsg">We appreciate your business! ★★★★★</div></div>
+    </div>
+    <div class="noprint" style="background:#f1f5f9;padding:10px;display:flex;gap:6px"><button onclick="$('receiptPopup').classList.remove('on')" style="flex:1;background:#fff;border:1px solid #111;padding:10px;cursor:pointer;font-weight:700;font-family:'Courier Prime',monospace" data-key="close">CLOSE</button><button onclick="printReceipt()" style="flex:1;background:#111;color:#fff;border:2px solid #111;padding:10px;cursor:pointer;font-weight:800;font-family:'Courier Prime',monospace" data-key="print">🖨️ PRINT</button></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ============================ EDIT ORDER ============================ -->
+<div id="editModal" class="bg" onclick="this.classList.remove('on')">
+ <div class="pop" onclick="event.stopPropagation()" style="margin-top:6vh">
+  <div style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)"><b>✏️ Edit Order</b><button class="icobtn" style="width:32px;height:32px;font-size:14px" onclick="$('editModal').classList.remove('on')">✕</button></div>
+  <form id="editForm" style="padding:16px;display:grid;gap:10px"><input type="hidden" id="editId">
+   <input class="in" id="editTo" required placeholder="Kis Ko">
+   <select class="in" id="editType"><option>LD Yellow</option><option>PP</option><option>LLD</option><option>ABA</option></select>
+   <input class="in" id="editSize" required placeholder="Size"><input class="in" id="editQty" required placeholder="Weight"><input class="in" id="editColour" required placeholder="Simple">
+   <button class="btn block" type="submit">SAVE EDIT</button></form>
+ </div>
+</div>
+
+<div id="toastBox"></div>
+
+<script>
+/* =====================================================================
+   TALHA INDUSTRY - sab code ek hi file mein
+   1. Helpers  2. Data  3. Login  4. Navigation  5. Notifications
+   6. Payroll (late kaatouti)  7. Render functions  8. Forms/Actions
+   ===================================================================== */
+
+/* ---------- 1. HELPERS ---------- */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const normKey=s=>String(s==null?'':s).toLowerCase().replace(/\s+/g,' ').trim();
+const uid=()=>(window.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2,10);
+const pad=(n,l=2)=>String(n).padStart(l,'0');
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const hm=d=>pad(d.getHours())+':'+pad(d.getMinutes());
+const today=ymd(new Date());
+const money=n=>'Rs '+Math.round(+n||0).toLocaleString('en-US');
+const sum=(a,k)=>a.reduce((s,x)=>s+(+x[k]||0),0);
+const fmtMin=m=>m>0?(Math.floor(m/60)?Math.floor(m/60)+'h ':'')+(m%60)+'m':'—';
+const monthLabel=m=>new Date(m+'-01T00:00:00').toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+function ago(ts){if(!ts)return'';const s=(Date.now()-ts)/1000;if(s<60)return'abhi';if(s<3600)return Math.floor(s/60)+'m pehle';if(s<86400)return Math.floor(s/3600)+'h pehle';return Math.floor(s/86400)+'d pehle'}
+
+/* ---------- 2. DATA (browser localStorage) ---------- */
+const read=(k,def)=>{try{const v=localStorage.getItem('ti_'+k);return v?JSON.parse(v):(def===undefined?[]:def)}catch(e){return def===undefined?[]:def}};
+const write=(k,v)=>{try{localStorage.setItem('ti_'+k,JSON.stringify(v))}catch(e){alert('Data save nahi ho saka (storage full ya block hai)')}};
+const KEYS=['orders','malls','notifs','attendance','complains','workers','invoices','clients','products','cameras','settings'];
+let orders=read('orders'),malls=read('malls'),notifs=read('notifs'),attendance=read('attendance'),complains=read('complains'),
+    workers=read('workers'),invoices=read('invoices'),clients=read('clients'),products=read('products'),cameras=read('cameras');
+const DEF={hikLink:'',goAddr:'',lateHours:2,lateAmount:200,shiftStart:'09:00',absentCut:true,monthDays:30,codes:{S:'3520',P:'4530',W:'3535'}};
+let settings=Object.assign({},DEF,read('settings',{}));settings.codes=Object.assign({},DEF.codes,settings.codes||{});
+
+/* ---------- VERSION ---------- */
+const APP_VERSION='1.0.0';
+const CHANGELOG=[
+ {v:'1.0.0',date:'2026-10-29',items:['Naya iOS jaisa design (Senior, Party, Worker portal)','Worker management, late kaatouti (har 2 ghantay Rs 200) aur payroll','Invoice ab party ke portal mein bhi aata hai, phone number aur WhatsApp','Notifications ke liye dustbin animation','Cameras page, Hik-Connect aur live video (go2rtc)','2 step login (naam, phir code)','Version aur update ka option']}
+];
+/* update aane par purana data ka snapshot (sirf data, code nahi) */
+function snapshot(reason){try{const d={};KEYS.forEach(k=>d[k]=read(k,k==='settings'?{}:[]));localStorage.setItem('ti_snap',JSON.stringify({ts:Date.now(),ver:APP_VERSION,reason:reason||'',data:d}));return true}catch(e){return false}}
+const prevVer=(()=>{try{return localStorage.getItem('ti_appVer')}catch(e){return null}})();
+if(prevVer&&prevVer!==APP_VERSION){snapshot('update v'+prevVer+' → v'+APP_VERSION);setTimeout(()=>showToast('✨ App update ho gayi','Ab v'+APP_VERSION+'. Aap ka data safe hai.','other'),900)}
+try{localStorage.setItem('ti_appVer',APP_VERSION)}catch(e){}
+
+/* purane data ko naye format mein lana (order number delete par na badle) */
+(function migrate(){
+  let n=0;orders.forEach(o=>{if(!o.no)o.no=++n;else n=Math.max(n,o.no)});write('orders',orders);
+  notifs.forEach(n=>{if(!n.readBy)n.readBy=['all']});write('notifs',notifs);
+})();
+
+const state={page:'',mdW:null,editW:null,gs:[]};
+const charts={};
+const ROLE=()=>sessionStorage.getItem('ti_role');
+const CU=()=>sessionStorage.getItem('ti_user');
+const CD=()=>sessionStorage.getItem('ti_user_display');
+const CW=()=>sessionStorage.getItem('ti_wid');
+const ono=o=>'TI-'+pad(o.no,3);
+const invNo=i=>'INV-'+pad(i.n,4);
+const nextNo=()=>Math.max(0,...orders.map(o=>o.no||0))+1;
+
+/* ---------- 3. LOGIN (step 1: naam, step 2: code) ---------- */
+const boxes=[...document.querySelectorAll('.otp-box')];const easy=$('easyCode');
+let useText=false,verifying=false,autoT=null;
+const shake=el=>{el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake')};
+const mark=()=>{boxes.forEach(b=>b.parentNode.classList.toggle('filled',!!b.value));const m=$('loginMsg');if(m&&m.classList.contains('bad')){m.textContent='';m.className='msg'}};
+const getCode=()=>useText?easy.value.trim():boxes.map(b=>b.value).join('');
+function autoGo(){clearTimeout(autoT);autoT=setTimeout(()=>{if(!useText&&boxes.every(x=>x.value))verify()},350)}
+function fillBoxes(code){const d=code.replace(/\D/g,'').slice(0,4).split('');boxes.forEach((b,i)=>b.value=d[i]||'');mark();if(d.length===4)autoGo()}
+boxes.forEach((b,i)=>{
+  b.addEventListener('input',e=>{const v=e.target.value.replace(/\D/g,'').slice(-1);e.target.value=v;mark();if(v&&i<3)boxes[i+1].focus();if(boxes.every(x=>x.value))autoGo()});
+  b.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!b.value&&i>0){boxes[i-1].focus();boxes[i-1].value='';mark()}if(e.key==='Enter'){e.preventDefault();verify()}});
+  b.addEventListener('paste',e=>{e.preventDefault();fillBoxes((e.clipboardData||window.clipboardData).getData('text'))});
+});
+function setMode(t){useText=t;$('otpRow').classList.toggle('hidden',t);$('pwWrap').classList.toggle('hidden',!t);$('toggleCode').textContent=t?'← 4 dibbon mein code likho':'Worker ya lamba code? Seedha likho';(t?easy:boxes[0]).focus()}
+function showStep(n){$('step1').classList.toggle('on',n===1);$('step2').classList.toggle('on',n===2);$('loginMsg').textContent='';$('nameMsg').textContent=''}
+function nextStep(){
+  const name=$('userName').value.trim(),m=$('nameMsg');
+  if(!name){m.textContent='Pehle apna naam likho';m.className='msg bad';shake($('step1'));$('userName').focus();return}
+  $('hiName').textContent=name;showStep(2);setTimeout(()=>(useText?easy:boxes[0]).focus(),80);
+}
+function verify(){
+  if(verifying)return;
+  const name=$('userName').value.trim(),code=getCode(),msg=$('loginMsg'),C=settings.codes;
+  if(!name){showStep(1);return}
+  if(!code){msg.textContent='Pehle code likho';msg.className='msg bad';shake($('step2'));return}
+  let role=null,wid=null,disp=name;
+  if(code===C.S)role='senior';else if(code===C.P)role='party';else if(code===C.W)role='worker';
+  else{const w=workers.find(x=>x.code.toLowerCase()===code.toLowerCase());if(w){role='worker';wid=w.id;disp=w.name}}
+  verifying=true;const btn=$('loginBtn');btn.classList.add('busy');btn.innerHTML='<span class="spn"></span>Verifying';
+  setTimeout(()=>{
+    btn.classList.remove('busy');btn.textContent='Verify';verifying=false;
+    if(!role){
+      boxes.forEach(b=>b.value='');mark();easy.value='';
+      msg.textContent='✕ Ghalat code, dobara koshish karo';msg.className='msg bad';
+      $('otpRow').classList.add('bad');setTimeout(()=>$('otpRow').classList.remove('bad'),700);
+      shake($('step2'));(useText?easy:boxes[0]).focus();return;
+    }
+    msg.textContent='✓ Verified';msg.className='msg ok';$('step2').classList.add('okk');
+    sessionStorage.setItem('ti_user',disp.toLowerCase());sessionStorage.setItem('ti_user_display',disp);
+    sessionStorage.setItem('ti_role',role);if(wid)sessionStorage.setItem('ti_wid',wid);else sessionStorage.removeItem('ti_wid');
+    setTimeout(enter,350);
+  },650);
+}
+$('loginForm').onsubmit=e=>{e.preventDefault();$('step1').classList.contains('on')?nextStep():verify()};
+$('nextBtn').onclick=nextStep;$('backBtn').onclick=()=>{showStep(1);$('userName').focus()};
+$('toggleCode').onclick=()=>setMode(!useText);
+$('userName').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();nextStep()}});
+easy.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();verify()}});
+easy.addEventListener('input',()=>{const m=$('loginMsg');if(m.classList.contains('bad')){m.textContent='';m.className='msg'}});
+function enter(){$('loginPage').classList.add('hidden');$('mainPage').classList.remove('hidden');setup()}
+$('logout').onclick=()=>{sessionStorage.clear();location.reload()};
+
+/* ---------- 4. NAVIGATION ---------- */
+const MENUS={
+  senior:[['dash','🏠','Dashboard'],['orders','📦','Orders'],['readyOrders','✅','Ready Orders'],['invoices','🧾','Invoices'],['workers','👷','Workers'],['attendance','🕒','Attendance'],['cameras','📹','Cameras'],['clients','🤝','Clients'],['products','🏷️','Products'],['mall','🎨','Mall Stock'],['reports','📊','Reports'],['complain','📢','Complain / Review'],['settings','⚙️','Settings']],
+  party:[['partyOrders','📦','My Orders'],['partyInvoices','🧾','My Invoices'],['partyNew','➕','New Order'],['complain','📢','Complain / Review'],['account','⚙️','Account']],
+  worker:[['wDash','🏠','Dashboard'],['ordersWork','📦','Party Orders'],['doneWork','✅','Ready Orders'],['myData','👤','Mera Data'],['complain','📢','Complain Reply'],['account','⚙️','Account']]
+};
+const TITLES={orders:['All Orders','Sab parties ke orders'],readyOrders:['Ready Orders','Tayyar mall'],invoices:['Invoices','Bill aur payment'],workers:['Workers','Worker management, code aur tankhwah'],attendance:['Attendance','Roz ki hazri aur late'],cameras:['Cameras','Factory ke cameras aur Hik-Connect'],clients:['Clients','Parties ka record'],products:['Products','Rate aur stock'],mall:['Mall Stock','Stock, search aur graph'],reports:['Reports','Mahana report aur payroll'],complain:['Complain / Review','Shikayat aur jawab'],settings:['Settings','Late rule, codes aur backup'],partyOrders:['My Orders','Aapke orders'],partyInvoices:['My Invoices','Aapke naam ke bill aur baqi'],partyNew:['New Order','Naya order do'],wDash:['Dashboard','Aaj ka kaam'],ordersWork:['Party Orders','Sab orders'],doneWork:['Ready Orders','Tayyar mall'],myData:['Mera Data','Apna code likho aur sab dekho'],account:['Account','Portal ki maloomat']};
+const ROLE_NAME={senior:'Senior Officer',party:'Party',worker:'Worker'};
+
+function avatar(){const r=ROLE(),n=CD()||'?';
+  if(r==='senior')return `<img src="profile.jpg.png" alt="" onerror="this.parentNode.textContent='${esc(n[0]||'T').toUpperCase()}'">`;
+  return esc(n[0]||'?').toUpperCase();}
+
+function setup(){
+  const role=ROLE(),name=CD();
+  $('navBox').innerHTML=MENUS[role].map(m=>`<button data-p="${m[0]}" onclick="go('${m[0]}')"><span class="ic">${m[1]}</span>${m[2]}</button>`).join('');
+  $('uName').textContent=name;$('meName').textContent=name;$('meRole').textContent=ROLE_NAME[role]+' Portal';
+  $('uAv').innerHTML=avatar();$('meAv').innerHTML=avatar();
+  $('poPartyWrap').classList.toggle('hidden',role!=='senior');
+  $('complainFormPanel').classList.toggle('hidden',role==='worker');
+  const info=`<p><b>Portal:</b> ${ROLE_NAME[role]}<br><b>User:</b> ${esc(name)}<br><b>CEO:</b> Rana Muhammad Shakeel<br><b>Access:</b> ${role==='senior'?'Full control - orders, invoices, workers, attendance, reports, settings':role==='party'?'Apne orders + naya order + complain/review':'Orders + READY + complain reply + apna data'}</p>`;
+  $('portalInfoDetail').innerHTML=info;$('portalInfoDetailS').innerHTML=info;
+  if(role==='worker'&&CW()){state.mdW=CW()}
+  go(MENUS[role][0][0]);
+}
+function go(p){
+  const role=ROLE();
+  if(!(MENUS[role].some(m=>m[0]===p)||(p==='partyNew'&&role==='senior')))return;
+  state.page=p;
+  document.querySelectorAll('.sec').forEach(s=>s.classList.toggle('active',s.id===p));
+  document.querySelectorAll('#navBox button').forEach(b=>b.classList.toggle('active',b.dataset.p===p));
+  const h=new Date().getHours(),part=h<12?'Morning':h<17?'Afternoon':'Evening';
+  if(p==='dash'){$('pgTitle').textContent='Good '+part+', '+CD()+'!';$('pgSub').textContent="Aaj aapki factory mein ye chal raha hai."}
+  else if(p==='wDash'){$('pgTitle').textContent='Good '+part+', '+CD()+'!';$('pgSub').textContent='Aaj ka kaam'}
+  else{$('pgTitle').textContent=TITLES[p][0];$('pgSub').textContent=TITLES[p][1]}
+  $('pgDate').textContent=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  closeSide();$('notifDD').classList.add('hidden');$('gsOut').classList.add('hidden');
+  if(p==='settings')fillSettings();
+  if(p==='attendance'||p==='workers')defaultTime();
+  render();window.scrollTo({top:0,behavior:'smooth'});
+}
+function openSide(){$('side').classList.add('open');$('scrim').classList.add('on')}
+function closeSide(){$('side').classList.remove('open');$('scrim').classList.remove('on')}
+document.addEventListener('click',e=>{if(!e.target.closest('.gs'))$('gsOut').classList.add('hidden');$('notifDD').classList.add('hidden')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.bg.on').forEach(b=>b.classList.remove('on'))});
+
+/* ---------- 5. NOTIFICATIONS / TOAST ---------- */
+const clean=t=>String(t==null?'':t).replace(/^[^A-Za-z0-9]+/,'');
+const KIND_IC={order:'📦',ready:'✅',invoice:'🧾',worker:'👤',complain:'📢',other:'🔔'};
+const me=()=>ROLE()+':'+CU();
+const visible=n=>{const roles=n.roles||['senior','worker','party'];return roles.includes(ROLE())&&(!n.user||ROLE()==='senior'||normKey(n.user)===normKey(CU()))};
+const isRead=n=>(n.readBy||[]).includes(me())||(n.readBy||[]).includes('all');
+const inbox=n=>visible(n)&&!(n.clearedBy||[]).includes(me());
+function addNotif(title,msg,kind,roles,user){
+  notifs.unshift({id:uid(),title,msg,kind:kind||'other',roles:roles||['senior'],user:user||null,ts:Date.now(),readBy:[]});
+  notifs=notifs.slice(0,60);write('notifs',notifs);showToast(title,msg,kind);updateNotifs();renderDash();
+}
+function showToast(t,m,kind){
+  const d=document.createElement('div');d.className='toast';
+  d.innerHTML=`<div class="aic k-${kind||'other'}">${KIND_IC[kind]||'🔔'}</div><div style="flex:1"><b>${esc(clean(t))}</b><div class="sub">${esc(m)}</div></div><button class="link" onclick="this.parentElement.remove()">✕</button>`;
+  $('toastBox').appendChild(d);setTimeout(()=>d.classList.add('show'),50);
+  setTimeout(()=>{d.classList.remove('show');setTimeout(()=>d.remove(),500)},4500);
+}
+function badge(){const u=notifs.filter(n=>inbox(n)&&!isRead(n)).length;const d=$('notifDot');d.textContent=u;d.classList.toggle('hidden',!u)}
+function updateNotifs(){
+  if(!ROLE())return;
+  const list=notifs.filter(inbox);
+  $('notifBody').innerHTML=list.map(n=>`<div class="act ${isRead(n)?'':'unread'}"><div class="aic k-${n.kind||'other'}">${KIND_IC[n.kind]||'🔔'}</div><div><div class="t">${esc(clean(n.title))}</div><div class="m">${esc(n.msg)}</div></div><div class="ag">${ago(n.ts)}</div></div>`).join('')||'<div class="empty">Koi notification nahi</div>';
+  badge();
+}
+function toggleNotif(open){
+  const dd=$('notifDD');const show=open===true?true:open===false?false:dd.classList.contains('hidden');
+  dd.classList.toggle('hidden',!show);
+  if(show){updateNotifs();let ch=false;notifs.forEach(n=>{if(inbox(n)&&!isRead(n)){(n.readBy=n.readBy||[]).push(me());ch=true}});if(ch)write('notifs',notifs);badge()}
+}
+
+/* dustbin: haathon se notifications khinch kar nigalta hai, phir burp, phir sab saaf (sirf apne liye) */
+let clearing=false;
+function clearNotifs(){
+  if(clearing)return;
+  const list=notifs.filter(inbox);
+  if(!list.length){showToast('Koi notification nahi','Sab pehle se saaf hai','other');return}
+  clearing=true;
+  const dd=$('notifDD');dd.scrollTop=0;dd.classList.add('eating','open');
+  setTimeout(()=>{                                   /* stage khulne ke baad files ko moonh ki taraf bhejo */
+    const m=dd.querySelector('.mouth').getBoundingClientRect(),mx=m.left+m.width/2,my=m.top+m.height/2;
+    const items=[...$('notifBody').querySelectorAll('.act')];
+    items.forEach((el,i)=>{const r=el.getBoundingClientRect();
+      el.style.setProperty('--i',Math.min(i,6));
+      el.style.setProperty('--dx',(mx-(r.left+r.width/2))+'px');el.style.setProperty('--dy',(my-(r.top+r.height/2))+'px');
+      el.style.setProperty('--rot',(i%2?-14:14)+'deg');el.classList.add('fly')});
+    const total=(Math.min(items.length,7)-1)*120+600;
+    setTimeout(()=>{dd.classList.remove('open');dd.classList.add('burp')},total+80);
+    setTimeout(()=>{list.forEach(n=>{(n.clearedBy=n.clearedBy||[]).push(me())});write('notifs',notifs);updateNotifs()},total+520);
+    setTimeout(()=>{dd.classList.remove('eating','burp');clearing=false},total+1500);
+  },330);
+}
+
+/* ---------- 6. PAYROLL (late kaatouti ka hisaab) ---------- */
+const matchW=(a,w)=>a.workerId?a.workerId===w.id:(a.workerName||'').toLowerCase()===w.name.toLowerCase();
+/* late = aane ka waqt - duty shuru hone ka waqt.  Har 'lateHours' ghantay par 'lateAmount' Rs kategay.
+   Misal: 2 ghantay = 200, 4 ghantay = 400, 6 ghantay = 600 */
+function lateInfo(a){
+  if(a.status!=='Present'||!a.checkIn)return{min:0,cut:0};
+  const [h,m]=a.checkIn.split(':').map(Number),[sh,sm]=settings.shiftStart.split(':').map(Number);
+  const min=Math.max(0,(h*60+m)-(sh*60+sm));
+  const blocks=Math.floor(min/(settings.lateHours*60));
+  return{min,cut:blocks*settings.lateAmount};
+}
+function payroll(w,month){
+  const recs=attendance.filter(a=>matchW(a,w)&&(a.date||'').startsWith(month)).sort((a,b)=>a.date.localeCompare(b.date));
+  let present=0,absent=0,half=0,lateMin=0,lateCut=0;
+  recs.forEach(a=>{
+    if(a.status==='Present'){present++;const l=lateInfo(a);lateMin+=l.min;lateCut+=l.cut}
+    else if(a.status==='Absent')absent++;else if(a.status==='Half Day')half++;
+  });
+  const daily=w.salary/settings.monthDays;
+  const absentCut=settings.absentCut?Math.round(daily*absent+daily*half/2):0;
+  const net=Math.max(0,w.salary-lateCut-absentCut);
+  return{recs,present,absent,half,lateMin,lateCut,absentCut,net};
+}
+const tile=(l,v,c)=>`<div class="tile ${c||''}"><div class="tl">${l}</div><div class="tv">${v}</div></div>`;
+function workerCard(w,month){
+  const p=payroll(w,month);
+  const done=orders.filter(o=>o.ready&&(o.workerId===w.id||(!o.workerId&&(o.workerName||'').toLowerCase()===w.name.toLowerCase())));
+  return `<div class="wcard">
+   <div class="whead"><div class="av">${esc(w.name[0]||'?').toUpperCase()}</div><div><div class="wname">${esc(w.name)}</div><div class="sub">Code: <b>${esc(w.code)}</b> • Salary: <b>${money(w.salary)}</b> • ${monthLabel(month)}</div></div></div>
+   <div class="mini">${tile('✅ Present',p.present)}${tile('❌ Absent',p.absent)}${tile('🌓 Half Day',p.half)}${tile('⏰ Total Late',fmtMin(p.lateMin))}${tile('➖ Late Kaatouti',money(p.lateCut),'red')}${tile('➖ Absent Kaatouti',money(p.absentCut),'red')}${tile('💵 Net Salary',money(p.net),'green')}</div>
+   <div class="formula">${money(w.salary)} − ${money(p.lateCut)} (late) − ${money(p.absentCut)} (absent) = ${money(p.net)}</div>
+   <h4>🕒 Attendance Detail</h4>
+   <div class="tw"><table><thead><tr><th>Date</th><th>Status</th><th>Check-In</th><th>Late</th><th>Kaatouti</th></tr></thead><tbody>${
+     p.recs.map(a=>{const l=lateInfo(a);return `<tr><td>${esc(a.date)}</td><td>${statusPill(a.status)}</td><td>${esc(a.checkIn||'-')}</td><td>${fmtMin(l.min)}</td><td>${l.cut?'<b style="color:#dc2626">'+money(l.cut)+'</b>':'—'}</td></tr>`}).join('')||'<tr><td colspan="5" class="empty">Is mahine ki attendance nahi lagi</td></tr>'}</tbody></table></div>
+   <h4>📦 Ready kiye hue orders (total ${done.length})</h4>
+   ${done.slice(-8).reverse().map(o=>`<span class="chip" style="cursor:default">${ono(o)} • ${esc(o.to)}</span>`).join('')||'<div class="sub">Abhi koi order nahi</div>'}
+  </div>`;
+}
+const statusPill=s=>s==='Present'?'<span class="pill p-green">Present</span>':s==='Absent'?'<span class="pill p-red">Absent</span>':'<span class="pill p-yellow">Half Day</span>';
+
+/* ---------- 7. RENDER ---------- */
+const stat=(c,ic,l,n,s)=>`<div class="stat ${c}"><div class="top"><div class="ico">${ic}</div>${l}</div><div class="num">${n}</div><div class="sub">${s}</div></div>`;
+const tag=o=>`<span class="ono ${o.ready?'rd':''}">${ono(o)}</span>`;
+const stPill=o=>o.ready?'<span class="pill p-green">✅ READY</span>':o.workerStatus==='In Progress'?'<span class="pill p-blue">In Progress</span>':'<span class="pill p-yellow">Pending</span>';
+const recBtn=o=>`<button class="btn ghost sm" onclick="showR('${o.id}')">🧾 ${ono(o)}</button>`;
+const none=(n,t)=>`<tr><td colspan="${n}" class="empty">${t}</td></tr>`;
+
+function render(){
+  if(!ROLE())return;
+  updateNotifs();
+  const f={dash:renderDash,orders:renderOrders,readyOrders:renderReady,doneWork:renderReady,partyOrders:renderParty,partyInvoices:renderPartyInvoices,wDash:renderWorkerOrders,ordersWork:renderWorkerOrders,invoices:renderInvoices,workers:renderWorkersPage,attendance:renderAttendance,cameras:renderCameras,clients:renderClients,products:renderProducts,mall:renderMall,reports:renderReports,complain:renderComplains,myData:renderMyData}[state.page];
+  if(f)f();
+}
+function mkChart(key,id,cfg){
+  const el=$(id);if(!el||typeof Chart==='undefined')return;
+  if(charts[key])charts[key].destroy();cfg.options=Object.assign({animation:false,responsive:true},cfg.options||{});charts[key]=new Chart(el,cfg);
+}
+function days7(){const a=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);a.push({k:ymd(d),l:d.toLocaleDateString('en-GB',{weekday:'short'})})}return a}
+
+function renderDash(){
+  if(ROLE()!=='senior'||!$('dashStats')||state.page!=='dash')return;
+  const paid=invoices.filter(i=>i.status==='Paid'),pend=invoices.filter(i=>i.status!=='Paid');
+  const present=attendance.filter(a=>a.date===today&&a.status!=='Absent').length;
+  const month=today.slice(0,7),lateCut=workers.reduce((s,w)=>s+payroll(w,month).lateCut,0);
+  $('dashStats').innerHTML=
+    stat('s1','📦','Total Orders',orders.length,orders.filter(o=>!o.ready).length+' pending')+
+    stat('s5','🏭','Production (Ready)',orders.filter(o=>o.ready).length,'Mall tayyar')+
+    stat('s2','💰','Total Revenue',money(sum(paid,'amount')),'Paid invoices')+
+    stat('s4','🧾','Pending Invoices',pend.length,money(sum(pend,'amount'))+' baqi')+
+    stat('s3','👷','Workers Present',present+' / '+workers.length,'Aaj ki attendance')+
+    stat('s6','⏰','Late Kaatouti',money(lateCut),'Is mahine ki');
+  const d7=days7(),rev=d7.map(d=>sum(paid.filter(i=>(i.paidDate||i.date)===d.k),'amount'));
+  $('rev7').textContent=money(rev.reduce((a,b)=>a+b,0));
+  const el=$('revChart');let grad='rgba(99,102,241,.2)';
+  try{const g=el.getContext('2d').createLinearGradient(0,0,0,220);g.addColorStop(0,'rgba(99,102,241,.35)');g.addColorStop(1,'rgba(99,102,241,0)');grad=g}catch(e){}
+  mkChart('rev','revChart',{type:'line',data:{labels:d7.map(d=>d.l),datasets:[{data:rev,borderColor:'#6366f1',backgroundColor:grad,fill:true,tension:.4,pointRadius:3,borderWidth:3}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'#eef1f8'}},x:{grid:{display:false}}}}});
+  mkChart('main','mainChart',{type:'bar',data:{labels:d7.map(d=>d.l),datasets:[{label:'Orders',data:d7.map(d=>orders.filter(o=>o.date===d.k).length),backgroundColor:'#a5b4fc',borderRadius:8}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{precision:0},grid:{color:'#eef1f8'}},x:{grid:{display:false}}}}});
+  $('actList').innerHTML=notifs.filter(visible).slice(0,5).map(n=>`<div class="act"><div class="aic k-${n.kind||'other'}">${KIND_IC[n.kind]||'🔔'}</div><div><div class="t">${esc(clean(n.title))}</div><div class="m">${esc(n.msg)}</div></div><div class="ag">${ago(n.ts)}</div></div>`).join('')||'<div class="empty">Abhi koi activity nahi</div>';
+  $('invMini').innerHTML=invoices.slice().sort((a,b)=>b.n-a.n).slice(0,3).map(i=>`<tr><td><b>${invNo(i)}</b></td><td>${esc(i.client)}</td><td>${money(i.amount)}</td><td>${invPill(i)}</td></tr>`).join('')||none(4,'Koi invoice nahi');
+}
+const invPill=i=>i.status==='Paid'?'<span class="pill p-green">Paid</span>':'<span class="pill p-yellow">Pending</span>';
+
+function renderOrders(){
+  if(!$('orderTable'))return;
+  const q=($('oq').value||'').toLowerCase();
+  const list=orders.filter(o=>!q||[ono(o),o.from,o.to,o.type,o.size,o.colourNote,o.date].join(' ').toLowerCase().includes(q)).slice().reverse();
+  $('orderTable').innerHTML=list.map(o=>`<tr><td>${tag(o)}</td><td><b>${esc(o.from)}</b><div class="sub">🔒 ${esc(o.createdBy)}</div></td><td><b>${esc(o.to)}</b></td><td>${esc(o.type)} ${esc(o.size)} = ${esc(o.qty)}</td><td>${stPill(o)}</td><td>${esc(o.date||'')}</td><td>${recBtn(o)}</td><td class="nowrap"><button class="btn ghost sm" onclick="openEdit('${o.id}')">✏️</button> <button class="btn red sm" onclick="delOrder('${o.id}')">🗑️</button></td></tr>`).join('')||none(8,'Koi order nahi');
+}
+function renderReady(){
+  if(!$('readyTable'))return;
+  const r=orders.filter(o=>o.ready).slice().reverse();
+  $('readyTable').innerHTML=r.map(o=>`<tr><td>${tag(o)}</td><td><b>${esc(o.from)}</b></td><td><b>${esc(o.to)}</b></td><td>${esc(o.type)} ${esc(o.size)} = ${esc(o.qty)}</td><td>${esc(o.readyTime||'-')}</td><td>${esc(o.workerName||'-')}</td><td>${recBtn(o)}</td></tr>`).join('')||none(7,'Abhi koi ready order nahi');
+  $('doneWorkTable').innerHTML=r.map(o=>`<tr><td>${tag(o)}</td><td><b>${esc(o.to)}</b></td><td>${esc(o.type)} ${esc(o.size)} = ${esc(o.qty)}</td><td>${esc(o.readyTime||'-')}</td><td>${recBtn(o)}</td></tr>`).join('')||none(5,'Abhi koi ready order nahi');
+}
+function renderParty(){
+  if(!$('partyOrderTable'))return;
+  const my=orders.filter(o=>o.createdBy===CU()).slice().reverse();
+  $('partyOrderTable').innerHTML=my.map(o=>`<tr><td>${tag(o)}</td><td><b>🔒 ${esc(o.to)}</b></td><td>${esc(o.type)} ${esc(o.size)} = ${esc(o.qty)}</td><td>${stPill(o)}</td><td>${esc(o.date||'')}</td><td>${recBtn(o)}</td></tr>`).join('')||none(6,'Abhi koi order nahi');
+}
+function renderPartyInvoices(){
+  if(!$('partyInvTable'))return;
+  const k=normKey(CU());
+  const my=invoices.filter(i=>normKey(i.client)===k).sort((a,b)=>b.n-a.n);
+  const paid=my.filter(i=>i.status==='Paid'),pend=my.filter(i=>i.status!=='Paid');
+  $('partyInvStats').innerHTML=stat('s1','🧾','Total Invoices',my.length,money(sum(my,'amount'))+' ka bill')+stat('s3','✅','Paid',money(sum(paid,'amount')),paid.length+' invoices')+stat('s4','⏳','Baqi',money(sum(pend,'amount')),pend.length+' pending');
+  $('partyInvTable').innerHTML=my.map(i=>{const o=orders.find(x=>x.id===i.orderId&&normKey(x.createdBy)===k);
+    return `<tr><td><b>${invNo(i)}</b></td><td>${o?tag(o):'-'}</td><td><b>${money(i.amount)}</b></td><td>${invPill(i)}</td><td>${esc(i.date)}</td></tr>`}).join('')||none(5,'Abhi aapke naam ka koi invoice nahi');
+}
+function renderWorkerOrders(){
+  if(!$('ordersWorkTable'))return;
+  $('ordersWorkTable').innerHTML=orders.slice().reverse().map(o=>`<tr><td>${tag(o)}</td><td><b>${esc(o.from)}</b></td><td><b>${esc(o.to)}</b></td><td>${esc(o.type)} ${esc(o.size)} = ${esc(o.qty)}</td><td>${stPill(o)}</td><td>${o.ready?recBtn(o):`<div class="row" style="gap:6px"><button class="btn sm" onclick="startOrder('${o.id}')">▶️ Start</button><button class="btn green sm" onclick="readyOrder('${o.id}')">✅ READY</button></div>`}</td></tr>`).join('')||none(6,'Koi order nahi');
+  if($('wStats')){
+    const pend=orders.filter(o=>!o.ready&&o.workerStatus!=='In Progress').length,prog=orders.filter(o=>!o.ready&&o.workerStatus==='In Progress').length;
+    $('wStats').innerHTML=stat('s4','⏳','Pending',pend,'Naye orders')+stat('s1','▶️','In Progress',prog,'Chal rahe hain')+stat('s3','✅','Ready',orders.filter(o=>o.ready).length,'Tayyar mall');
+  }
+}
+
+/* --- Invoices --- */
+function clientRows(){
+  const map={};
+  clients.forEach(c=>{map[c.name.toLowerCase()]={id:c.id,name:c.name,phone:c.phone,city:c.city,stored:true}});
+  orders.forEach(o=>{const k=(o.from||'').toLowerCase();if(k&&!map[k])map[k]={name:o.from,stored:false}});
+  invoices.forEach(i=>{const k=(i.client||'').toLowerCase();if(k&&!map[k])map[k]={name:i.client,stored:false}});
+  return Object.keys(map).map(k=>{const c=map[k];c.orders=orders.filter(o=>(o.from||'').toLowerCase()===k).length;
+    const inv=invoices.filter(i=>(i.client||'').toLowerCase()===k);c.billed=sum(inv,'amount');if(!c.phone){const lp=inv.slice().reverse().find(x=>x.phone);if(lp)c.phone=lp.phone}c.pending=sum(inv.filter(i=>i.status!=='Paid'),'amount');return c});
+}
+function renderInvoices(){
+  if(!$('invTable'))return;
+  const sel=$('inOrder'),v=sel.value;
+  sel.innerHTML='<option value="">— Order se link (optional) —</option>'+orders.slice().reverse().map(o=>`<option value="${o.id}">${ono(o)} • ${esc(o.from)} → ${esc(o.to)}</option>`).join('');
+  sel.value=v;
+  $('clientList').innerHTML=clientRows().map(c=>`<option value="${esc(c.name)}">`).join('');
+  $('invTable').innerHTML=invoices.slice().sort((a,b)=>b.n-a.n).map(i=>{const o=orders.find(x=>x.id===i.orderId);
+    return `<tr><td><b>${invNo(i)}</b></td><td><b>${esc(i.client)}</b>${i.phone?`<div class="sub">📞 ${esc(i.phone)}</div>`:''}</td><td>${o?tag(o):'-'}</td><td><b>${money(i.amount)}</b></td><td>${invPill(i)}</td><td>${esc(i.date)}</td><td class="nowrap">${i.status==='Paid'?`<button class="btn ghost sm" onclick="toggleInv('${i.id}')">↩️ Pending</button>`:`<button class="btn green sm" onclick="toggleInv('${i.id}')">✅ Paid</button>`} ${i.phone?`<button class="btn ghost sm" title="WhatsApp par bhejo" onclick="waInvoice('${i.id}')">📲</button> `:''}<button class="btn red sm" onclick="delInv('${i.id}')">🗑️</button></td></tr>`}).join('')||none(7,'Koi invoice nahi');
+}
+
+/* --- Workers (management + search) --- */
+function renderWorkersPage(){
+  if(!$('wTable')||ROLE()!=='senior')return;
+  const month=$('wMonth').value||today.slice(0,7);
+  $('wRuleNote').textContent='Late rule: har '+settings.lateHours+' ghantay late par '+money(settings.lateAmount)+' kaatouti (duty '+settings.shiftStart+' se shuru). Settings mein badal sakte ho.';
+  $('wTable').innerHTML=workers.map(w=>{const p=payroll(w,month);
+    return `<tr><td><b>${esc(w.name)}</b></td><td><span class="code">${esc(w.code)}</span></td><td>${money(w.salary)}</td><td>${p.present} / ${p.absent} / ${p.half}</td><td style="color:#dc2626">${money(p.lateCut+p.absentCut)}</td><td><b>${money(p.net)}</b></td><td class="nowrap"><button class="btn ghost sm" onclick="pickWorker('${w.id}')">📋 Report</button> <button class="btn ghost sm" onclick="editWorker('${w.id}')">✏️</button> <button class="btn red sm" onclick="delWorker('${w.id}')">🗑️</button></td></tr>`}).join('')||none(7,'Abhi koi worker register nahi. Upar form se add karo.');
+  wSearch();
+}
+function wSearch(){
+  const out=$('wsOut');if(!out)return;
+  const q=$('wsQ').value.trim().toLowerCase();
+  if(!q){out.innerHTML='';return}
+  let res=workers.filter(w=>w.code.toLowerCase()===q);
+  if(!res.length)res=workers.filter(w=>w.name.toLowerCase().includes(q)||w.code.toLowerCase().includes(q));
+  const month=$('wMonth').value||today.slice(0,7);
+  if(!res.length){out.innerHTML='<div class="empty">Koi worker nahi mila</div>';return}
+  if(res.length===1){out.innerHTML=workerCard(res[0],month);return}
+  out.innerHTML='<div class="chips">'+res.map(w=>`<button class="chip" onclick="pickWorker('${w.id}')">${esc(w.name)} • ${esc(w.code)}</button>`).join('')+'</div>';
+}
+function pickWorker(id){const w=workers.find(x=>x.id===id);if(!w)return;$('wsQ').value=w.code;wSearch();window.scrollTo({top:0,behavior:'smooth'})}
+function resetWForm(){state.editW=null;$('wForm').reset();$('wFormTitle').textContent='➕ Naya Worker Register';$('wSubmit').textContent='Register Karo';$('wCancel').classList.add('hidden')}
+function editWorker(id){const w=workers.find(x=>x.id===id);if(!w)return;state.editW=id;$('wName').value=w.name;$('wCode').value=w.code;$('wSalary').value=w.salary;$('wFormTitle').textContent='✏️ Worker Edit: '+w.name;$('wSubmit').textContent='Update Karo';$('wCancel').classList.remove('hidden');$('wName').focus();window.scrollTo({top:$('wForm').offsetTop-120,behavior:'smooth'})}
+function delWorker(id){const w=workers.find(x=>x.id===id);if(!w||!confirm(w.name+' aur uski attendance dono delete hongi. Pakka?'))return;
+  workers=workers.filter(x=>x.id!==id);attendance=attendance.filter(a=>a.workerId!==id);write('workers',workers);write('attendance',attendance);render()}
+
+/* --- Attendance --- */
+function defaultTime(){if($('atTime')&&!$('atTime').value)$('atTime').value=hm(new Date())}
+function renderAttendance(){
+  if(!$('attTable')||ROLE()!=='senior')return;
+  const sel=$('atW'),v=sel.value;
+  sel.innerHTML=workers.map(w=>`<option value="${w.id}">${esc(w.name)} (${esc(w.code)})</option>`).join('')||'<option value="">Pehle worker add karo</option>';
+  if(v)sel.value=v;
+  $('atNote').textContent='Duty '+settings.shiftStart+' se shuru • har '+settings.lateHours+' ghantay late par '+money(settings.lateAmount)+' kaatouti.';
+  $('attTable').innerHTML=attendance.slice().sort((a,b)=>(b.date+(b.checkIn||'')).localeCompare(a.date+(a.checkIn||''))).slice(0,120).map(a=>{const l=lateInfo(a);
+    return `<tr><td>${esc(a.date)}</td><td><b>${esc(a.workerName)}</b></td><td>${statusPill(a.status)}</td><td>${esc(a.checkIn||'-')}</td><td>${fmtMin(l.min)}</td><td>${l.cut?'<b style="color:#dc2626">'+money(l.cut)+'</b>':'—'}</td><td><button class="btn red sm" onclick="delAtt('${a.id}')">Del</button></td></tr>`}).join('')||none(7,'Abhi attendance nahi lagi');
+}
+
+/* --- Clients / Products --- */
+function renderClients(){
+  if(!$('clientTable'))return;
+  $('clientTable').innerHTML=clientRows().map(c=>`<tr><td><b>${esc(c.name)}</b>${c.stored?'':' <span class="pill p-gray">auto</span>'}</td><td>${esc(c.phone||'-')}</td><td>${esc(c.city||'-')}</td><td>${c.orders}</td><td>${money(c.billed)}</td><td style="color:${c.pending?'#dc2626':'inherit'}">${money(c.pending)}</td><td>${c.stored?`<button class="btn red sm" onclick="delClient('${c.id}')">Del</button>`:''}</td></tr>`).join('')||none(7,'Abhi koi client nahi');
+}
+function renderProducts(){
+  if(!$('prodTable'))return;
+  if(document.activeElement&&document.activeElement.closest&&document.activeElement.closest('#prodTable'))return;
+  $('prodTable').innerHTML=products.map(p=>`<tr><td><b>${esc(p.name)}</b></td><td><input class="in" type="number" step="any" style="width:110px;padding:6px 10px" value="${p.rate}" onchange="setProd('${p.id}','rate',this.value)"></td><td><input class="in" type="number" step="any" style="width:110px;padding:6px 10px" value="${p.stock}" onchange="setProd('${p.id}','stock',this.value)"></td><td>${money(p.rate*p.stock)}</td><td><button class="btn red sm" onclick="delProd('${p.id}')">Del</button></td></tr>`).join('')||none(5,'Abhi koi product nahi');
+}
+
+/* --- Cameras (Hik-Connect + live video via go2rtc) --- */
+const HIK_DEFAULT='https://www.hik-connect.com';
+const slug=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
+const camSrc=c=>slug(c.src)||slug(c.name);
+const liveOn=new Set();
+function openHik(){window.open(settings.hikLink||HIK_DEFAULT,'_blank','noopener')}
+function liveURL(c){return settings.goAddr+'/stream.html?src='+encodeURIComponent(camSrc(c))}
+function renderCameras(){
+  if(!$('camGrid')||ROLE()!=='senior')return;
+  const live=!!settings.goAddr;
+  $('hikNote').textContent=(live?'Live video server: '+settings.goAddr+'. Camera par "▶ Live" dabao.':'Live video apni app ke andar chahiye to Settings mein "Live Video Server" ka address likho (go2rtc wala).')+' Hik-Connect: '+(settings.hikLink||HIK_DEFAULT);
+  $('camGrid').innerHTML=cameras.map(c=>{
+    const on=live&&liveOn.has(c.id);
+    const view=on?`<div class="camview live"><iframe src="${esc(liveURL(c))}" allow="autoplay; fullscreen" allowfullscreen></iframe></div>`:`<div class="camview">📹</div>`;
+    const btn=live?(on?`<button class="btn ghost sm block" onclick="stopCam('${c.id}')">⏹ Live Band</button>`:`<button class="btn green sm block" onclick="playCam('${c.id}')">▶ Live</button>`):'';
+    return `<div class="camtile">${view}<div class="rowb" style="margin:0 0 10px"><div><b>${esc(c.name)}</b><div class="sub">${esc(c.where||'—')}${live?' • stream: '+esc(camSrc(c)):''}</div></div><button class="btn red sm" onclick="delCam('${c.id}')">🗑️</button></div>${btn}<button class="btn sm block" style="margin-top:6px" onclick="openHik()">Hik-Connect mein dekho</button></div>`}).join('')||'<div class="card empty" style="grid-column:1/-1">Abhi koi camera add nahi. Upar se naam likho ya "Jaldi add" dabao.</div>';
+}
+function playCam(id){liveOn.add(id);renderCameras()}
+function stopCam(id){liveOn.delete(id);renderCameras()}
+function addCam(name,where,src){cameras.push({id:uid(),name,where:where||'',src:slug(src)});write('cameras',cameras);renderCameras()}
+function quickCam(n){addCam(n,'','')}
+function delCam(id){if(!confirm('Camera hatana hai?'))return;cameras=cameras.filter(x=>x.id!==id);liveOn.delete(id);write('cameras',cameras);renderCameras()}
+$('camForm').onsubmit=e=>{e.preventDefault();const n=$('camName').value.trim();if(!n)return;addCam(n,$('camWhere').value.trim(),$('camSrc').value.trim());e.target.reset()};
+
+/* --- Mall stock --- */
+function renderMall(){
+  if(!$('mallTable'))return;
+  const f=($('mallSearch').value||'').toLowerCase();
+  const list=malls.filter(m=>!f||(m.colour+' '+m.size+' '+m.weight+' '+m.note+' '+m.date).toLowerCase().includes(f));
+  $('mallTable').innerHTML=list.map(m=>`<tr class="clk" onclick="openMallGraph('${m.id}')"><td><b>${esc(m.colour)}</b><div class="sub">${esc(m.note||'Mall')}</div></td><td>${esc(m.size)}</td><td>${esc(m.weight)}</td><td>${esc(m.date)}</td><td><button class="btn ghost sm">📊 Graph</button></td><td><button class="btn red sm" onclick="event.stopPropagation();delMall('${m.id}')">Del</button></td></tr>`).join('')||none(6,'Koi mall nahi');
+}
+function openMallGraph(id){
+  if(ROLE()!=='senior'){alert('Graph sirf Senior dekh sakta hai');return}
+  const m=malls.find(x=>x.id===id);if(!m)return;
+  const note=(m.note||'').toLowerCase();
+  const rel=orders.filter(o=>(o.type||'').toLowerCase().includes(m.colour.toLowerCase())||(note&&((o.from||'').toLowerCase().includes(note)||note.includes((o.to||'').toLowerCase()&&(o.to||'').toLowerCase()))));
+  const byDate={};rel.forEach(o=>{byDate[o.date]=(byDate[o.date]||0)+1});
+  const labels=Object.keys(byDate).sort().slice(-7);
+  $('mallGraphDetail').classList.remove('hidden');$('selectedMallName').textContent=m.colour+' - '+m.note;
+  mkChart('mall','mallDetailChart',{type:'bar',data:{labels:labels.length?labels:['No Data'],datasets:[{label:m.colour+' Orders',data:labels.length?labels.map(l=>byDate[l]):[0],backgroundColor:'#a5b4fc',borderRadius:8}]},options:{scales:{y:{beginAtZero:true,ticks:{precision:0}}}}});
+  $('mallDetailStats').innerHTML=tile('Total Orders',rel.length)+tile('Ready',rel.filter(r=>r.ready).length,'green')+tile('Weight',esc(m.weight));
+  $('mallGraphDetail').scrollIntoView({behavior:'smooth'});
+}
+
+/* --- Reports --- */
+function renderReports(){
+  if(ROLE()!=='senior'||!$('rMonth'))return;
+  const m=$('rMonth').value||today.slice(0,7);
+  const mo=orders.filter(o=>(o.date||'').startsWith(m));
+  const paid=invoices.filter(i=>i.status==='Paid'&&(i.paidDate||i.date||'').startsWith(m));
+  const pend=invoices.filter(i=>i.status!=='Paid'&&(i.date||'').startsWith(m));
+  const pr=workers.map(w=>({w,p:payroll(w,m)}));
+  $('rStats').innerHTML=
+    stat('s1','📦','Orders',mo.length,mo.filter(o=>o.ready).length+' ready')+
+    stat('s2','💰','Revenue (Paid)',money(sum(paid,'amount')),paid.length+' invoices')+
+    stat('s4','🧾','Baqi Invoices',money(sum(pend,'amount')),pend.length+' pending')+
+    stat('s3','💵','Payroll (Net)',money(pr.reduce((s,x)=>s+x.p.net,0)),workers.length+' workers')+
+    stat('s6','➖','Total Kaatouti',money(pr.reduce((s,x)=>s+x.p.lateCut+x.p.absentCut,0)),'late + absent');
+  const [y,mm]=m.split('-').map(Number),dn=new Date(y,mm,0).getDate(),labels=[],data=[];
+  for(let d=1;d<=dn;d++){labels.push(d);data.push(mo.filter(o=>o.date===m+'-'+pad(d)).length)}
+  mkChart('rep','rChart',{type:'bar',data:{labels,datasets:[{label:'Orders',data,backgroundColor:'#a5b4fc',borderRadius:6}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{precision:0}}}}});
+  $('rTable').innerHTML=pr.map(({w,p})=>`<tr><td><b>${esc(w.name)}</b><div class="sub">${esc(w.code)}</div></td><td>${money(w.salary)}</td><td>${p.present}</td><td>${p.absent}</td><td>${p.half}</td><td>${fmtMin(p.lateMin)}</td><td style="color:#dc2626">${money(p.lateCut)}</td><td style="color:#dc2626">${money(p.absentCut)}</td><td><b>${money(p.net)}</b></td></tr>`).join('')||none(9,'Koi worker nahi');
+}
+function payrollCSV(){
+  const m=$('rMonth').value||today.slice(0,7);
+  const rows=[['Worker','Code','Salary','Present','Absent','HalfDay','LateMinutes','LateCut','AbsentCut','Net']];
+  workers.forEach(w=>{const p=payroll(w,m);rows.push([w.name,w.code,w.salary,p.present,p.absent,p.half,p.lateMin,p.lateCut,p.absentCut,p.net])});
+  const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'}));a.download='payroll-'+m+'.csv';a.click();
+}
+
+/* --- Complain --- */
+function renderComplains(){
+  if(!$('complainList'))return;
+  const role=ROLE(),cu=CU();
+  const list=role==='party'?complains.filter(c=>c.createdBy===cu):complains;
+  $('complainList').innerHTML=list.map(c=>`<div class="cc"><div class="rowb" style="margin-bottom:6px"><b>📢 ${esc(c.partyName)} • ${esc(c.date)}</b><span style="color:#f59e0b">${'★'.repeat(c.rating)}${'☆'.repeat(5-c.rating)}</span></div>
+   <div style="background:#fff;padding:10px;border-radius:10px;border:1px solid #fde68a">${esc(c.text)}</div>
+   ${c.replies.map(r=>`<div class="reply"><b>${esc(r.by)}:</b> ${esc(r.text)} <span class="sub">${esc(r.time)}</span></div>`).join('')}
+   <div class="row mt" style="gap:6px"><input class="in" id="rep-${c.id}" placeholder="Reply karo" style="flex:1;padding:8px 12px"><button class="btn green sm" onclick="replyComplain('${c.id}')">↩️ Reply</button>${role!=='worker'?`<button class="btn red sm" onclick="delComplain('${c.id}')">Del</button>`:''}</div></div>`).join('')||'<div class="card empty">Koi complain nahi</div>';
+}
+
+/* --- Worker: Mera Data --- */
+function mdShow(){
+  const code=$('mdCode').value.trim().toLowerCase(),out=$('mdOut');
+  if(!code){out.innerHTML='<div class="card empty">Pehle apna code likho</div>';state.mdW=null;return}
+  const w=workers.find(x=>x.code.toLowerCase()===code);
+  if(!w){state.mdW=null;out.innerHTML='<div class="card empty">❌ Ye code kisi worker ka nahi hai</div>';return}
+  state.mdW=w.id;renderMyData();
+}
+function renderMyData(){
+  const out=$('mdOut');if(!out||ROLE()!=='worker'||!state.mdW)return;
+  const w=workers.find(x=>x.id===state.mdW);if(!w){out.innerHTML='';return}
+  if(!$('mdMonth').value)$('mdMonth').value=today.slice(0,7);
+  const rec=attendance.find(a=>matchW(a,w)&&a.date===today);
+  const ci=rec?`<div class="row"><span class="pill ${rec.status==='Present'?'p-green':'p-yellow'}">Aaj: ${esc(rec.status)}${rec.checkIn?' • '+esc(rec.checkIn):''}</span></div>`:`<button class="btn green" onclick="mdCheckIn()">🕒 Check-In Abhi</button>`;
+  out.innerHTML=`<div class="card"><div class="rowb" style="margin:0"><b>Aaj ki attendance</b>${ci}</div></div><div class="card">${workerCard(w,$('mdMonth').value)}</div>`;
+}
+function mdCheckIn(){
+  const w=workers.find(x=>x.id===state.mdW);if(!w)return;
+  if(attendance.some(a=>matchW(a,w)&&a.date===today)){alert('Aaj ki attendance pehle se lag chuki hai');return}
+  const rec={id:uid(),workerId:w.id,workerName:w.name,status:'Present',date:today,checkIn:hm(new Date())};
+  attendance.push(rec);write('attendance',attendance);const l=lateInfo(rec);
+  addNotif('🕒 Check-In',w.name+' • '+rec.checkIn+(l.min?' • late '+fmtMin(l.min):''),'worker',['senior']);
+  render();
+}
+
+/* --- Settings --- */
+function fillSettings(){renderVersion();
+  $('seLateH').value=settings.lateHours;$('seLateA').value=settings.lateAmount;$('seShift').value=settings.shiftStart;$('seDays').value=settings.monthDays;
+  $('seAbsent').checked=!!settings.absentCut;$('seHik').value=settings.hikLink||'';$('seGo').value=settings.goAddr||'';$('seCS').value=settings.codes.S;$('seCP').value=settings.codes.P;$('seCW').value=settings.codes.W;
+}
+$('seForm').onsubmit=e=>{
+  e.preventDefault();
+  const lh=+$('seLateH').value,la=+$('seLateA').value,md=+$('seDays').value;
+  if(!(lh>0)||!(la>=0)||!(md>0)){alert('Numbers sahi likho');return}
+  const S=$('seCS').value.trim(),P=$('seCP').value.trim(),W=$('seCW').value.trim();
+  const low=[S,P,W].map(x=>x.toLowerCase());
+  if(low.some(x=>x.length<4)||new Set(low).size<3){alert('Teeno portal codes kam az kam 4 character ke aur alag alag hon');return}
+  if(workers.some(w=>low.includes(w.code.toLowerCase()))){alert('Portal code kisi worker ke personal code se takra raha hai');return}
+  const hik=$('seHik').value.trim();if(hik&&!/^https?:\/\//i.test(hik)){alert('Hik-Connect link https:// se shuru hona chahiye');return}
+  const go=$('seGo').value.trim().replace(/\/+$/,'');if(go&&!/^https?:\/\//i.test(go)){alert('Live video server ka address http:// se shuru hona chahiye');return}
+  settings={hikLink:hik,goAddr:go,lateHours:lh,lateAmount:la,shiftStart:$('seShift').value||'09:00',absentCut:$('seAbsent').checked,monthDays:md,codes:{S,P,W}};
+  write('settings',settings);showToast('✅ Settings save ho gayi','Naye rule foran lag gaye','other');render();
+};
+const bk=()=>{const all={};KEYS.forEach(k=>all[k]=read(k,k==='settings'?{}:[]));return all};
+function backup(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(bk())],{type:'application/json'}));a.download='talha-industry-backup-'+today+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
+function restore(file){if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!confirm('Maujooda data replace ho jayega. Pakka?'))return;KEYS.forEach(k=>{if(d[k]!==undefined)write(k,d[k])});location.reload()}catch(e){alert('Ye backup file sahi nahi hai')}};r.readAsText(file)}
+
+/* --- Version / Update --- */
+const cmpVer=(a,b)=>{const x=String(a).split('.').map(n=>+n||0),y=String(b).split('.').map(n=>+n||0);for(let i=0;i<3;i++){if((x[i]||0)!==(y[i]||0))return (x[i]||0)>(y[i]||0)?1:-1}return 0};
+const getSnap=()=>{try{return JSON.parse(localStorage.getItem('ti_snap')||'null')}catch(e){return null}};
+async function checkUpdate(manual){
+  if(!/^https?:/.test(location.protocol)){if(manual)showToast('Update check','Ye sirf online link par chalta hai (file se kholi hui app par nahi)','other');return}
+  try{
+    const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('x');
+    const j=await r.json();
+    if(cmpVer(j.version,APP_VERSION)>0){$('updTxt').textContent='🆕 Naya update tayyar: v'+j.version+(j.note?' – '+j.note:'');$('updBar').classList.remove('hidden')}
+    else if(manual)showToast('✅ App naya hai','Aap v'+APP_VERSION+' par ho, koi naya update nahi','other');
+  }catch(e){if(manual)showToast('Update check nahi ho saka','Internet ya version.json file check karo','other')}
+}
+function applyUpdate(){
+  snapshot('update se pehle');
+  fetch(location.href.split('#')[0],{cache:'reload'}).catch(()=>{}).then(()=>location.reload());
+}
+function restoreSnap(){
+  const s=getSnap();if(!s)return;
+  if(!confirm('Maujooda data replace hoga aur '+new Date(s.ts).toLocaleString()+' wala data wapas aayega. Pakka?'))return;
+  KEYS.forEach(k=>{if(s.data[k]!==undefined)write(k,s.data[k])});location.reload();
+}
+function renderVersion(){
+  const b=$('verBox');if(!b)return;
+  const s=getSnap();
+  b.innerHTML=`<div class="rowb"><div><div style="font-size:22px;font-weight:700">v${APP_VERSION}</div><div class="sub">Ye app ka maujooda version hai</div></div><button class="btn" onclick="checkUpdate(true)">🔄 Update Check Karo</button></div>
+   <p class="muted" style="margin:6px 0">Update aane par upar ek banner aata hai. "Update Karo" dabao to app naye version par chali jati hai. <b>Aap ka data nahi mitta</b>, kyunke wo code se alag save hota hai.</p>
+   ${s?`<div class="sub">💾 Update se pehle ka data snapshot: ${esc(new Date(s.ts).toLocaleString())} (${esc(s.reason||'')}) <button class="link" onclick="restoreSnap()">Wapas lao</button></div>`:'<div class="sub">💾 Abhi koi snapshot nahi (pehli update par ban jayega).</div>'}
+   <h4 style="margin:14px 0 4px">Naya kya hai</h4>${CHANGELOG.map(c=>`<div class="clog"><b>v${esc(c.v)}</b> <span class="sub">${esc(c.date)}</span><ul>${c.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}`;
+}
+
+/* --- Global search (topbar) --- */
+function gsearch(q){
+  q=q.trim().toLowerCase();const out=$('gsOut');
+  if(!q){out.classList.add('hidden');return}
+  const role=ROLE(),res=[];
+  const pool=role==='party'?orders.filter(o=>o.createdBy===CU()):orders;
+  const page=role==='senior'?'orders':role==='party'?'partyOrders':'ordersWork';
+  pool.forEach(o=>{if([ono(o),o.from,o.to,o.type,o.size].join(' ').toLowerCase().includes(q))res.push({ic:'📦',t:ono(o)+' • '+o.from+' → '+o.to,s:o.type+' '+o.size+' = '+o.qty,f:()=>{if(role==='senior')$('oq').value=ono(o);go(page)}})});
+  if(role==='senior'){
+    workers.forEach(w=>{if((w.name+' '+w.code).toLowerCase().includes(q))res.push({ic:'👷',t:w.name,s:'Worker • code '+w.code,f:()=>{go('workers');pickWorker(w.id)}})});
+    invoices.forEach(i=>{if((invNo(i)+' '+i.client).toLowerCase().includes(q))res.push({ic:'🧾',t:invNo(i)+' • '+i.client,s:money(i.amount)+' • '+i.status,f:()=>go('invoices')})});
+    clientRows().forEach(c=>{if(c.name.toLowerCase().includes(q))res.push({ic:'🤝',t:c.name,s:'Client • '+c.orders+' orders',f:()=>go('clients')})});
+  }
+  state.gs=res.slice(0,8);
+  out.innerHTML=state.gs.map((r,i)=>`<div class="ddi" onclick="gsPick(${i})"><b>${r.ic} ${esc(r.t)}</b><div class="sub">${esc(r.s)}</div></div>`).join('')||'<div class="empty">Kuch nahi mila</div>';
+  out.classList.remove('hidden');
+}
+function gsPick(i){const r=state.gs[i];$('gsOut').classList.add('hidden');$('gsQ').value='';if(r)r.f()}
+
+/* ---------- RECEIPT ---------- */
+let isRoman=false;
+const translations={en:{ceoTitle:'CHIEF EXECUTIVE OFFICER',machineReceipt:'MACHINE RECEIPT',orderNoLabel:'ORDER NUMBER - WHITE MALL RECEIPT',party:'Party (Private):',kisKoReceipt:'KIS KO DENA HAI:',type:'TYPE:',size:'SIZE:',weight:'WEIGHT:',simple:'SIMPLE:',address:'ADDRESS:',status:'STATUS:',qrTitle:'QR CODE - Scan Karo',qrDesc:'Scan karke order dekho',thankCursive:'Thank you for Choosing',thankTitle:'TALHA INDUSTRY',ceoSmall:'CEO Rana Muhammad Shakeel',thankMsg:'We appreciate your business! ★★★★★',close:'CLOSE',print:'🖨️ PRINT',readyGreen:'✅ READY - GREEN - MALL READY HAI'},
+roman:{ceoTitle:'CHIEF EXECUTIVE OFFICER',machineReceipt:'MACHINE KI RECEIPT',orderNoLabel:'ORDER NUMBER - MALL KI PARCHI',party:'Party Ka Naam:',kisKoReceipt:'KIS KO DENA HAI:',type:'QISAM:',size:'SIZE:',weight:'WAZAN:',simple:'SIMPLE MUTABIK:',address:'PATA:',status:'HALAT:',qrTitle:'QR CODE - Scan Karo',qrDesc:'Ye QR scan karo, tafseel dekho',thankCursive:'Shukria - Ap Ne Chuna',thankTitle:'TALHA INDUSTRY',ceoSmall:'CEO Rana Muhammad Shakeel',thankMsg:'Apka Bohat Shukria! ★★★★★',close:'BAND KARO',print:'🖨️ PRINT KARO',readyGreen:'✅ READY HO GAYA - MALL TAYYAR HAI'}};
+function toggleLang(){isRoman=!isRoman;const t=isRoman?translations.roman:translations.en;
+  document.querySelectorAll('#receiptPopup [data-key]').forEach(el=>{const k=el.getAttribute('data-key');if(t[k])el.textContent=t[k]});
+  $('langBtn').textContent=isRoman?'🌐 ROMAN URDU ↔ ENGLISH':'🌐 ENGLISH ↔ ROMAN URDU'}
+function printReceipt(){document.body.classList.add('pr');window.print();setTimeout(()=>document.body.classList.remove('pr'),500)}
+window.addEventListener('afterprint',()=>document.body.classList.remove('pr'));
+function showR(id){
+  const o=orders.find(x=>x.id===id);if(!o)return;
+  $('rcOrderNo').textContent=ono(o);$('rcNo').textContent='#'+id.slice(0,6).toUpperCase();$('rcDate').textContent=new Date().toLocaleString();
+  $('rcUser').textContent=o.from+' (Private: '+o.createdBy+')';$('rcTo').textContent=o.to;$('rcType').textContent=o.type;$('rcSize').textContent=o.size;$('rcQty').textContent=o.qty;
+  $('rcColour').textContent=o.colourNote;$('rcAddress').textContent=o.note||'-';
+  $('rcStatus').textContent=o.ready?'✅ READY - GREEN - MALL READY HAI':'ORDER DONE ✓';
+  $('rcReadyBadge').style.display=o.ready?'block':'none';$('qrDataText').textContent=ono(o)+' | '+o.to;
+  $('qrcode').innerHTML='';
+  if(typeof QRCode!=='undefined'){try{new QRCode($('qrcode'),{text:`TALHA INDUSTRY\n${ono(o)}\nParty: ${o.from}\nTo: ${o.to}\nType: ${o.type} ${o.size}\nWeight: ${o.qty}\nCEO: Rana Muhammad Shakeel\n${o.ready?'READY GREEN':''}`,width:90,height:90,colorDark:'#111',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H})}catch(e){}}
+  const anim=document.querySelector('.machine-receipt-anim');anim.style.animation='none';void anim.offsetWidth;anim.style.animation='machinePrint .9s cubic-bezier(.68,-.55,.27,1.55) forwards';
+  $('receiptPopup').classList.add('on');
+}
+
+/* ---------- 8. FORMS / ACTIONS ---------- */
+/* --- Orders --- */
+$('partyOrderForm').onsubmit=e=>{
+  e.preventDefault();
+  const role=ROLE();let by=CU(),from=CD();
+  if(role==='senior'){const pn=$('poParty').value.trim();if(!pn){alert('Party ka naam likho');return}by=pn.toLowerCase();from=pn}
+  const o={id:uid(),no:nextNo(),createdBy:by,from,to:$('poTo').value.trim(),type:$('poType').value,size:$('poSize').value.trim(),qty:$('poQty').value.trim(),colourNote:$('poColour').value.trim(),date:$('poDate').value,note:$('poNote').value.trim(),workerStatus:'Pending',ready:false};
+  if(!o.to||!o.size){alert('Zaroori fields bharo');return}
+  orders.push(o);write('orders',orders);
+  addNotif('📦 New Order Received',ono(o)+' • '+from+' → '+o.to,'order',['senior','worker']);
+  e.target.reset();$('poDate').value=today;
+  go(role==='senior'?'orders':'partyOrders');showR(o.id);
+};
+function openEdit(id){
+  if(ROLE()!=='senior')return;const o=orders.find(x=>x.id===id);if(!o)return;
+  $('editId').value=id;$('editTo').value=o.to;$('editType').value=o.type;$('editSize').value=o.size;$('editQty').value=o.qty;$('editColour').value=o.colourNote;$('editModal').classList.add('on');
+}
+$('editForm').onsubmit=e=>{
+  e.preventDefault();const o=orders.find(x=>x.id===$('editId').value);if(!o)return;
+  o.to=$('editTo').value.trim();o.type=$('editType').value;o.size=$('editSize').value.trim();o.qty=$('editQty').value.trim();o.colourNote=$('editColour').value.trim();
+  write('orders',orders);$('editModal').classList.remove('on');render();showToast('✏️ Order Edit ho gaya',ono(o)+' • '+o.to,'order');
+};
+function startOrder(id){const o=orders.find(x=>x.id===id);if(!o)return;o.workerStatus='In Progress';write('orders',orders);render()}
+function readyOrder(id){
+  const o=orders.find(x=>x.id===id);if(!o)return;
+  o.ready=true;o.readyTime=new Date().toLocaleString();o.readyDate=today;o.workerName=CD();if(CW())o.workerId=CW();o.workerStatus='Ready - Green';
+  write('orders',orders);
+  addNotif('✅ MALL READY - GREEN',ono(o)+' • '+o.to+' • '+o.type+' '+o.size+' • Party: '+o.from,'ready',['senior','worker','party'],o.createdBy);
+  render();showR(id);
+}
+function delOrder(id){if(!confirm('Ye order delete karna hai?'))return;orders=orders.filter(x=>x.id!==id);write('orders',orders);render()}
+
+/* --- Invoices --- */
+$('inOrder').onchange=()=>{const o=orders.find(x=>x.id===$('inOrder').value);if(o&&!$('inClient').value)$('inClient').value=o.from};
+$('invForm').onsubmit=e=>{
+  e.preventDefault();
+  const amount=+$('inAmount').value;if(!(amount>0)){alert('Amount sahi likho');return}
+  const n=Math.max(0,...invoices.map(i=>i.n||0))+1,st=$('inStatus').value;
+  const phone=$('inPhone').value.trim();
+  const inv={id:uid(),n,client:$('inClient').value.trim(),phone,orderId:$('inOrder').value||null,amount,date:$('inDate').value,status:st,paidDate:st==='Paid'?$('inDate').value:null};
+  const sc=clients.find(x=>normKey(x.name)===normKey(inv.client));if(sc&&!sc.phone&&phone){sc.phone=phone;write('clients',clients)}
+  invoices.push(inv);write('invoices',invoices);
+  addNotif(st==='Paid'?'🧾 Invoice Paid':'🧾 Naya Invoice',invNo(inv)+' • '+inv.client+' • '+money(amount),'invoice',['senior','party'],normKey(inv.client));
+  e.target.reset();$('inDate').value=today;delete $('inPhone').dataset.manual;render();
+};
+function toggleInv(id){
+  const i=invoices.find(x=>x.id===id);if(!i)return;
+  if(i.status==='Paid'){i.status='Pending';i.paidDate=null}
+  else{i.status='Paid';i.paidDate=today;addNotif('🧾 Invoice Paid',invNo(i)+' • '+i.client+' • '+money(i.amount),'invoice',['senior','party'],normKey(i.client))}
+  write('invoices',invoices);render();
+}
+function phoneFor(name){
+  const k=normKey(name);if(!k)return '';
+  const c=clients.find(x=>normKey(x.name)===k&&x.phone);if(c)return c.phone;
+  const i=invoices.slice().reverse().find(x=>normKey(x.client)===k&&x.phone);return i?i.phone:'';
+}
+const waNum=p=>{let d=String(p||'').replace(/\D/g,'');if(d.startsWith('00'))d=d.slice(2);else if(d.startsWith('0'))d='92'+d.slice(1);return d};
+function waInvoice(id){
+  const i=invoices.find(x=>x.id===id);if(!i||!i.phone)return;
+  const t='Talha Industry\n'+invNo(i)+'\nParty: '+i.client+'\nAmount: '+money(i.amount)+'\nStatus: '+i.status+'\nDate: '+i.date+'\nShukriya!';
+  window.open('https://wa.me/'+waNum(i.phone)+'?text='+encodeURIComponent(t),'_blank','noopener');
+}
+$('inClient').addEventListener('input',()=>{const ph=phoneFor($('inClient').value);if(!$('inPhone').dataset.manual)$('inPhone').value=ph});
+$('inPhone').addEventListener('input',()=>{$('inPhone').dataset.manual='1'});
+function delInv(id){if(!confirm('Invoice delete karna hai?'))return;invoices=invoices.filter(x=>x.id!==id);write('invoices',invoices);render()}
+
+/* --- Workers --- */
+$('wForm').onsubmit=e=>{
+  e.preventDefault();
+  const name=$('wName').value.trim(),code=$('wCode').value.trim(),salary=+$('wSalary').value;
+  if(!name||!code||!(salary>=0)){alert('Naam, code aur salary likho');return}
+  const lc=code.toLowerCase();
+  if(Object.values(settings.codes).some(c=>c.toLowerCase()===lc)){alert('Ye code portal ke code se takra raha hai, koi aur code likho');return}
+  if(workers.some(w=>w.code.toLowerCase()===lc&&w.id!==state.editW)){alert('Ye code kisi aur worker ko diya hua hai');return}
+  if(state.editW){
+    const w=workers.find(x=>x.id===state.editW);w.name=name;w.code=code;w.salary=salary;
+    attendance.forEach(a=>{if(a.workerId===w.id)a.workerName=name});write('attendance',attendance);
+    write('workers',workers);showToast('✏️ Worker Update','Rizwan ka data update ho gaya'.replace('Rizwan',name),'worker');
+  }else{
+    const w={id:uid(),name,code,salary,joined:today};workers.push(w);write('workers',workers);
+    addNotif('👤 New Worker Registered',name+' • code '+code+' • '+money(salary),'worker');
+  }
+  resetWForm();render();
+};
+
+/* --- Attendance --- */
+$('atStatus').onchange=()=>{$('atTime').disabled=$('atStatus').value==='Absent'};
+$('attForm').onsubmit=e=>{
+  e.preventDefault();
+  const w=workers.find(x=>x.id===$('atW').value);if(!w){alert('Pehle Workers page se worker add karo');return}
+  const status=$('atStatus').value,date=$('atDate').value;
+  attendance=attendance.filter(a=>!(matchW(a,w)&&a.date===date));
+  const rec={id:uid(),workerId:w.id,workerName:w.name,status,date,checkIn:status==='Absent'?'':($('atTime').value||'')};
+  attendance.push(rec);write('attendance',attendance);
+  const l=lateInfo(rec);
+  showToast('🕒 Attendance save',w.name+' • '+status+(l.cut?' • late kaatouti '+money(l.cut):''),'worker');
+  render();
+};
+function delAtt(id){attendance=attendance.filter(x=>x.id!==id);write('attendance',attendance);render()}
+
+/* --- Clients / Products / Mall --- */
+$('clientForm').onsubmit=e=>{e.preventDefault();clients.push({id:uid(),name:$('clName').value.trim(),phone:$('clPhone').value.trim(),city:$('clCity').value.trim()});write('clients',clients);e.target.reset();render()};
+function delClient(id){if(!confirm('Client delete karna hai?'))return;clients=clients.filter(x=>x.id!==id);write('clients',clients);render()}
+$('prodForm').onsubmit=e=>{e.preventDefault();products.push({id:uid(),name:$('pName').value.trim(),rate:+$('pRate').value,stock:+$('pStock').value});write('products',products);e.target.reset();render()};
+function setProd(id,k,v){const p=products.find(x=>x.id===id);if(!p)return;p[k]=+v||0;write('products',products);render()}
+function delProd(id){if(!confirm('Product delete karna hai?'))return;products=products.filter(x=>x.id!==id);write('products',products);render()}
+$('mallForm').onsubmit=e=>{e.preventDefault();malls.push({id:uid(),colour:$('mallColour').value,size:$('mallSize').value.trim(),weight:$('mallWeight').value.trim(),date:$('mallDate').value,note:$('mallNote').value.trim()});write('malls',malls);e.target.reset();$('mallDate').value=today;render()};
+function delMall(id){malls=malls.filter(x=>x.id!==id);write('malls',malls);render()}
+
+/* --- Complain --- */
+document.querySelectorAll('.star').forEach(s=>{s.onclick=()=>{const v=+s.dataset.star;$('complainRating').value=v;document.querySelectorAll('.star').forEach(x=>x.classList.toggle('active',+x.dataset.star<=v))}});
+$('complainForm').onsubmit=e=>{
+  e.preventDefault();const t=$('complainText').value.trim();if(!t)return;
+  complains.unshift({id:uid(),partyName:CD(),createdBy:CU(),text:t,rating:+$('complainRating').value||0,date:new Date().toLocaleDateString(),replies:[]});
+  write('complains',complains);$('complainText').value='';$('complainRating').value=0;document.querySelectorAll('.star').forEach(x=>x.classList.remove('active'));
+  addNotif('📢 New Complain',t.slice(0,40),'complain',['senior','worker']);renderComplains();
+};
+function replyComplain(id){
+  const c=complains.find(x=>x.id===id),inp=$('rep-'+id),txt=inp.value.trim();if(!c||!txt)return;
+  c.replies.push({by:CD(),text:txt,time:new Date().toLocaleString()});write('complains',complains);
+  addNotif('↩️ Complain Reply',c.partyName+' ko reply mila','complain',['senior','party'],c.createdBy);renderComplains();
+}
+function delComplain(id){if(!confirm('Delete?'))return;complains=complains.filter(x=>x.id!==id);write('complains',complains);renderComplains()}
+
+/* ---------- START ---------- */
+['poDate','mallDate','attDate','inDate'].forEach(i=>{const el=$(i)||$(i.replace('attDate','atDate'));if(el)el.value=today});
+$('atDate').value=today;$('wMonth').value=today.slice(0,7);$('rMonth').value=today.slice(0,7);$('mdMonth').value=today.slice(0,7);
+window.addEventListener('load',()=>{if(ROLE())render()});
+$('verTag').textContent='v'+APP_VERSION;
+setTimeout(()=>checkUpdate(false),3000);setInterval(()=>checkUpdate(false),300000);
+defaultTime();
+if(sessionStorage.getItem('ti_role')&&MENUS[ROLE()])enter();else $('userName').focus();
+</script>
+</body>
+</html>
